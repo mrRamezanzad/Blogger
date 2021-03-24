@@ -1,0 +1,55 @@
+<!-- navbar -->
+<nav class="navbar navbar-light bg-white sticky-top navbar-expand-lg  
+     mb-5">
+    <div class="container-fluid">
+
+        <!-- logo -->
+        <!-- <a class="navbar-brand" href="/">ایمن گستر</a> -->
+        <a class="navbar-brand"  style="margin:0; float: left" href="/"><img src="/images/logo.png" alt="logo"></a>
+
+        <!-- toggle button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- menu content -->
+        <div class="collapse navbar-collapse d-lg-flex flex-lg-row-reverse me-3 text-end" id="navbarNav">
+            <ul class="navbar-nav d-lg-flex- flex-lg-row-reverse">
+                <li class="nav-item">
+                    <a class="nav-link <%if(page === "home"){%> active <%}%>" aria-current="page" href="/">خانه</a>
+                    <span class="bi bi-house-fill d-inline-block"></span>
+                </li>
+                
+                <!-- Dashboard -->
+                <% if (typeof locals.user === "object") { %>
+                    <li class="nav-item">
+                        <a class="nav-link <%if(page === "dashboard"){%> active <%}%>" href="/dashboard/">داشبورد</a>
+                        <span class="bi bi-person-badge d-inline-block"></span>
+                    </li>
+                <% } %>
+
+                <!-- Register & Login -->
+                <% if (typeof locals.user === "undefined") { %>
+                    <li class="nav-item">
+                        <a class="nav-link <%if(page === "register"){%> active <%}%>" href="/register/">ثبت نام</a>
+                        <span class="bi bi-clipboard-plus d-inline-block "></span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%if(page === "login"){%> active <%}%>" href="/login/">ورود</a>
+                        <span class="bi bi-person d-inline-block "></span>
+                    </li>
+                <% } %>
+
+                <!-- Logout -->
+                <% if (typeof locals.user === "object") { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout/">خروج</a>
+                        <span class="bi bi-power d-inline-block "></span>
+                    </li>
+                <% } %>
+            </ul>
+
+        </div>
+    </div>
+</nav>

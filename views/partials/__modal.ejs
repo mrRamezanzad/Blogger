@@ -1,0 +1,32 @@
+  <!-- Modal -->
+  <div class="modal fade" id="password-confirmation-modal" tabindex="-1" aria-labelledby="password-confirmation-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmation-modal-title">تغییر رمز عبور</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="row text-end justify-content-center">
+                <div class="col-8">
+                    <label class="form-label" for="currentPassword">رمز فعلی</label>
+                    <input class="form-control" type="password" name="currentPassword"  placeholder="Current Password">
+                </div>
+                <div class="col-8">
+                    <label class="form-label" for="currentPassword">رمز جدید</label>
+                    <input class="form-control" type="password" name="newPassword"  placeholder="New Password">
+                </div>
+                <div class="col-8">
+                    <label class="form-label" for="currentPassword">تکرار رمز جدید</label>
+                    <input class="form-control" type="password" name="newPasswordConfirmation"  placeholder="New Password Confirmation">
+                </div>
+
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+              <button class="btn btn-primary" data-change-password="<%= userId %>">درخواست تایید</button>
+          </div>
+        </div>
+    </div>
+  </div>

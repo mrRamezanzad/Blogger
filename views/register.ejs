@@ -1,0 +1,62 @@
+<%- include("./partials/__header", {title: "register"}) %>
+<%- include("./partials/__navbar", {page: "register"}) %> 
+<%- include("./partials/__alert", {msg, err}) %> 
+
+
+<div class="container pt-5">
+  
+  <form class="row flex-row-reverse justify-content-center mt-5 text-end gy-5" action="/users" method="POST">
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="firstname">نام کوچک</label>
+        <input class="form-control" tyep="text" name="firstName">
+      </div>
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="lastName">نام خانوادگی</label>
+        <input class="form-control" type="text" name="lastName">
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="email">ایمیل</label>
+        <input class="form-control" type="email" name="email"> 
+      </div>
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="username">نام کاربری</label>
+        <input class="form-control" type="text" name="username">
+      </div>
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="password">رمز عبور</label>
+        <input class="form-control" type="password" name="password">
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="gender">جنسیت</label>
+        <select class="form-select"name="gender">
+          <option value="male">مرد</option>
+          <option value="female">زن</option>
+        </select>
+      </div>
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="mobile">شماره موبایل</label>
+        <input class="form-control" type="text" name="mobile">
+      </div>
+      
+      <div class="col-12 col-sm-6 col-lg-3">
+        <label class="form-label" for="role">نقش کاربر</label>
+        <select class="form-select" name="role">
+          <option value="blogger">بلاگر</option>
+        </select>
+      </div>
+
+      <div class="col-3">
+        <button class="mt-2 btn btn-primary" type="submit">ثبت نام</button>
+      </div>
+  </form>
+</div>
+
+<%- include("./partials/__scripts") %>
+<%- include("./partials/__footer") %>
