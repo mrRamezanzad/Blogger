@@ -25,15 +25,13 @@ router.get('/login/', checkLogin, (req, res) => {
 router.get('/dashboard/', isAuthorized, async (req, res) => {
   
   try{
-
     let user = await User.read(req.session.user._id)
-    res.locals.user = user
-  } 
-  catch(err){
-
-    if(err) return req.flash("error", err)
+    
+  } catch (err) {
+    req.flash("error", err)
   }
-
+  
+  res.locals.user = user
   res.render('dashboard--profile', {msg: req.flash('message'), err: req.flash('error')})
 })
 // router.get('/dashboard/', isAuthorized, async (req, res) => {
