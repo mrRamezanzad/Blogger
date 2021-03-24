@@ -34,14 +34,9 @@ exports.read = async (userId, callback = "") => {
         })
     }
 
-    try {
-
-        user = await User.findById(userId)
-
-    } catch (err) {
-        return callback("مشکلی در پیدا کردن اطلاعات کابری بوجود آمده است.", user)
-    }
-
+    let user
+    try {user = await User.findById(userId)}
+    catch (err) {return callback("مشکلی در پیدا کردن اطلاعات کابری بوجود آمده است.", user)}
     callback(null, user)
 }
 
@@ -57,13 +52,8 @@ exports.update = async (userId, updatedUserInfo, callback) => {
     }
 
     let user
-    try {
-        user = await User.findOneAndUpdate({_id: userId}, {$set: updatedUserInfo})  
-        
-    } catch (err) {
-        return callback(err, user)
-    }
-
+    try {user = await User.findOneAndUpdate({_id: userId}, {$set: updatedUserInfo})}
+    catch (err) {return callback(err, user)}
     callback(null, user)
 }
 
@@ -77,13 +67,9 @@ exports.delete = async (userId, callback) => {
         })
     }
 
-    try {
-        let user = await User.remove({_id: userId})
-
-    } catch (err) {
-        return callback(err, false)
-    }
-
+    let user
+    try {user = await User.remove({_id: userId})} 
+    catch (err) {return callback(err, false)}
     callback(null, true)
 }
 
@@ -97,22 +83,14 @@ exports.comparePassword = async (userId, enteredPassword, callback) => {
            })
         })
     }
-    let user
-    try {
-        user = await this.read(userId)
 
-    } catch (err) {
-        return callback(err, false)
-    }
+    let user
+    try {user = await this.read(userId)}
+    catch (err) {return callback(err, false)}
 
     let isMatch 
-    try{
-        isMatch = await bcrypt.compare(enteredPassword, user.password)
-
-    }catch(err){
-        return callback(err, isMatch)
-    }
-
+    try{isMatch = await bcrypt.compare(enteredPassword, user.password)}
+    catch(err){return callback(err, isMatch)}
     callback(null, isMatch)
 }
 
@@ -127,20 +105,12 @@ exports.updatePassword = async (userId, newPassword, callback) => {
         })
     }
 
-    try {
-        let user = await User.findById({_id: userId})
+    let user
+    try {user = await User.findById({_id: userId})}
+    catch (err) {return callback(err, false)}
 
-    } catch (err) {
-        return callback(err, false)
-    }
-
-        user.password = newPassword
-        try {
-            user = await user.save()
-
-        } catch (err) {
-            return callback(err, false)
-        }
-
+    user.password = newPassword
+    try {user = await user.save()}
+    catch (err) {return callback(err, false)}
     callback(null, true)
 }

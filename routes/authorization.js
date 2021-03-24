@@ -5,7 +5,7 @@ const express = require('express'),
 const {logUserIn, logUserOut} = require('../services/authorization')
 
 // ============================Logging User In============================
-router.post('/login/', (req, res) => {
+router.post('/login/', async (req, res) => {
     let loginPattern = ["username", "password"]
     let inputKeys    = Object.keys(req.body)
     let isDataValid = loginPattern.every( input => inputKeys.includes(input) && req.body[input].trim() !== "" )
@@ -15,21 +15,19 @@ router.post('/login/', (req, res) => {
       return res.redirect('/login/')
     }
   
-    logUserIn(req.body, (err, user) => { 
-      if(err){
-        req.flash('error', err)
-        return res.redirect('/login/')
-      }
-      req.flash('message', `${user.username} خوش آمدی`) 
-      req.session.user = user
-      
-      return res.redirect('/dashboard/')
-    })
+    let user 
+    try { user = await logUserIn(req.body) }
+    catch (err) {
+      req.flash('error', err)
+      return res.redirect('/login/')
+    }
+
+    req.flash('message', `${user.username} خوش آمدی`) 
+    req.session.user = user
+    return res.redirect('/dashboard/')
     
   })
   // ============================Logout User============================
-  router.get('/logout/', (req, res) => {
-    logUserOut(req, res)
-  })
+  router.get('/logout/', (req, res) => { logUserOut(req, res)} )
 
   module.exports = router

@@ -3,9 +3,9 @@
 <%- include("./partials/__alert", {msg, err}) %> 
 
 
-<div class="container text-end">
-    <button data-user-id="<%= locals.user._id %> " id="edit-user" class=" d-inline-block mt-2 btn btn-success me-3">ذخیره</button>
+<div class="container">
     <h5 class="d-inline-block">مشخصات جدید را وارد کنید</h5>
+    <button data-user-id="<%= locals.user._id %> " id="edit-user" class=" d-inline-block mt-2 btn btn-success me-3">ذخیره</button>
     <div class="row mt-2 gy-4 ">
         <div class="col-6 col-lg-3">
             <label for="username">نام کاربری</label>
