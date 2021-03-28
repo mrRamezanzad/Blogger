@@ -1,7 +1,7 @@
 .alert {
-    position: fixed;
-    width:100%;
-    z-index: 1000;
+    margin: 0 auto;
+    width:50%;
+    z-index: 2000;
     &-box {
         top: 4.3rem;
     }

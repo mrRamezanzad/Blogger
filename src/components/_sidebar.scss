@@ -1,0 +1,49 @@
+.dashboard-menu-button{
+    transition: all ease-in-out .2s;
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    font-size: 2rem;
+    color: $color-red;
+    cursor: pointer;
+    &:hover{
+       font-size: 2.1rem;
+    }
+}
+aside{
+    top: 110px;
+    padding: 2rem;
+    border-block-start:1rem solid $color-red;
+    border-block-end:1rem solid $color-red;
+    border-radius: 10px 50px 0px;
+    background-color: white;
+    color: $color-red !important;
+
+    .avatar{    
+        display: block;
+        width: 4rem;
+        height: 4rem;
+        margin: 0 auto;
+    }
+    
+    .nav-link:hover,
+    span:hover {
+        transition: all 200ms linear;
+        color: #0D4BDA !important;
+        text-shadow: 0 0 1px black;
+    }
+    ul{
+        margin: .5rem!important;
+        padding: 0!important;
+        li{
+            margin-top: .5em;
+            list-style-type: none;
+            a{
+                text-decoration: none;
+                cursor: pointer;
+                color: black;
+                
+            }
+        }
+    }        
+}

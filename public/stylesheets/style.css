@@ -34,9 +34,9 @@ nav .nav-item .nav-link {
 }
 
 .alert {
-  position: fixed;
-  width: 100%;
-  z-index: 1000;
+  margin: 0 auto;
+  width: 50%;
+  z-index: 2000;
 }
 .alert-box {
   top: 4.3rem;
@@ -47,6 +47,54 @@ label {
 }
 label:not(:first-of-type) {
   margin-top: 1rem;
+}
+
+.dashboard-menu-button {
+  transition: all ease-in-out 0.2s;
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  font-size: 2rem;
+  color: #DF4C73;
+  cursor: pointer;
+}
+.dashboard-menu-button:hover {
+  font-size: 2.1rem;
+}
+
+aside {
+  top: 110px;
+  padding: 2rem;
+  border-block-start: 1rem solid #DF4C73;
+  border-block-end: 1rem solid #DF4C73;
+  border-radius: 10px 50px 0px;
+  background-color: white;
+  color: #DF4C73 !important;
+}
+aside .avatar {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto;
+}
+aside .nav-link:hover,
+aside span:hover {
+  transition: all 200ms linear;
+  color: #0D4BDA !important;
+  text-shadow: 0 0 1px black;
+}
+aside ul {
+  margin: 0.5rem !important;
+  padding: 0 !important;
+}
+aside ul li {
+  margin-top: 0.5em;
+  list-style-type: none;
+}
+aside ul li a {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
 }
 
 /*# sourceMappingURL=style.css.map */

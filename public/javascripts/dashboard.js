@@ -10,6 +10,7 @@ deleteUserButton.on("click", function (e) {
         url: `/users/${userId}`,
         success: function (response) {
             console.log("Success>>>>>", response);
+            // FIXME: replacing all alerts with proper UI alert
             alert("به امید دیدار مجدد")
             location.replace("/")
             
@@ -81,3 +82,10 @@ function sendPasswordChangeRequest (updatePasswordInformation) {
         }
     })
 }
+
+// handle dashboard special menu functionality for responsiveness
+$(".dashboard-menu-button").on("click", function (e) {
+    $(this).toggleClass("bi-columns-gap bi-columns")
+    $("#dashboard-menu").toggleClass("d-none")
+
+})
