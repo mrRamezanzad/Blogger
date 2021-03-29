@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// TODO: Check for neccessary fields in article 
 const commentSchema = new mongoose.Schema({
     text: {
         type: String, 

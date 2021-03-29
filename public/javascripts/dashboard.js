@@ -1,5 +1,6 @@
 const deleteUserButton     = $("[role=delete-user]"),
-      saveEditedUserButton = $("#edit-user")
+      saveEditedUserButton = $("#edit-user"),
+      MESSAGE_SHOW_INTERVAL= 1000
 
 // Send User Delete Request When Delete Button Clicked
 deleteUserButton.on("click", function (e) {
@@ -10,12 +11,22 @@ deleteUserButton.on("click", function (e) {
         url: `/users/${userId}`,
         success: function (response) {
             console.log("Success>>>>>", response);
-            // FIXME: replacing all alerts with proper UI alert
-            alert("به امید دیدار مجدد")
-            location.replace("/")
+            $(".alert-box").append(`
+                <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
+                    ${response}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`
+            )
+            setTimeout(()=>{location.replace("/")},MESSAGE_SHOW_INTERVAL)
             
         }, 
         error: function (err) {
+            $(".alert-box").append(`
+                <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+                    ${err}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`
+            )
             console.log("Error >>>>>", err);
         }
     });
@@ -32,12 +43,23 @@ saveEditedUserButton.on("click", function (e) {
         data: editedUserInfo,
         success: function (response) {
             console.log("Success >>>>>", response.msg);
-            alert(response.msg)
-            location.replace("/dashboard")
+            $(".alert-box").append(`
+                <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
+                    ${response.msg}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`
+            )
+            setTimeout(()=>{location.replace("/dashboard")},MESSAGE_SHOW_INTERVAL)
         },
         error: function (err) {''
             console.log("Error >>>>>", err);
-            alert(err.responseJSON.err)
+            
+            $(".alert-box").append(`
+                <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+                    ${err.responseJSON.err}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`
+            )
         }
     });
 })
@@ -55,10 +77,22 @@ $("[data-change-password]").on("click", function (e) {
         $("input[name='newPassword']").val().trim() === "" ||
         $("input[name='newPasswordConfirmation']").val().trim() === ""  
     )
-        return alert("پر کردن تمامی فیلد ها الزامی است")
+        
+        return $(".alert-box").append(`
+            <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+                پر کردن تمامی فیلد ها الزامی است
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`
+        )
+        
 
     if($("input[name='newPassword']").val() !== $("input[name='newPasswordConfirmation']").val())
-        return alert("تکرار رمز عبور همخوانی ندارد")
+        return $(".alert-box").append(`
+            <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+                تکرار رمز عبور همخوانی ندارد
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>`
+        )
     const updatePasswordInformation = {
         currentPassword: $("input[name='currentPassword']").val(),
         newPassword    : $("input[name='newPassword']").val()
@@ -73,12 +107,22 @@ function sendPasswordChangeRequest (updatePasswordInformation) {
         data: updatePasswordInformation,
         success: function (response) {
             console.log("Success >>>", response)
-            alert(response)
-            location.reload()
+            $(".alert-box").append(`
+                <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
+                    ${response}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`
+            )
+            setTimeout(()=>{location.reload()},MESSAGE_SHOW_INTERVAL)
         },
         error: function (err) {
             console.log("Error >>>", err)
-            alert(err.responseText)
+            $(".alert-box").append(`
+                <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+                    ${err.responseText}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>`
+            )   
         }
     })
 }
