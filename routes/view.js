@@ -6,39 +6,37 @@ const express = require('express'),
       }    = require('../services/authorization'),
       User = require('../services/user')
 
-// ============================Render Home Page============================
+// ============================ Home ============================
 router.get('/', function(req, res, next) {
   res.render('index', {msg: req.flash('message'), err: req.flash('error')});
 });
 
-// ============================Render Register Page============================
+// ============================ Register ============================
 router.get('/register/', checkLogin, (req, res) => {
   res.render('register', {msg: req.flash('message'), err: req.flash('error')})
 })
 
-// ============================Render Login Page============================
+// ============================ Login ============================
 router.get('/login/', checkLogin, (req, res) => {
   res.render('login', {msg: req.flash('message'), err: req.flash('error')})
 })
 
-// ============================Render Dashboard Page============================
+// ============================ Dashboard ============================
 router.get('/dashboard/', isAuthorized, async (req, res) => {
-  let user 
-  try{ user = await User.read(req.session.user._id) }
-  catch (err) { req.flash("error", err) }
-  
-  res.locals.user = user
+  User.setUserInLocals(req)
   res.render('dashboard--profile', {msg: req.flash('message'), err: req.flash('error')})
 })
 
-// ============================Render Dashboard Edit Page============================
+// ============================ Dashboard Edit ============================
 router.get('/dashboard/edit/', isAuthorized, async (req, res) => {
-  let user
-  try { user = await User.read(req.session.user._id) }
-  catch (err) { return req.flash("error", err) }
-
-  res.locals.user = user
+  User.setUserInLocals(req)
   res.render('dashboard--edit', {msg: req.flash('message'), err: req.flash('error')})
+})
+
+// ============================ New Article ============================
+router.get('/new', isAuthorized, (req, res) => {
+  User.setUserInLocals(req)
+  res.render('article--create', {msg: req.flash('message'), err: req.flash('error')})
 })
 
 module.exports = router;

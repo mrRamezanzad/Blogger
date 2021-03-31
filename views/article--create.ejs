@@ -1,0 +1,50 @@
+<%- include("./partials/__header--start", {title: "Edit Profile"}) %>
+<%- include("./partials/__header--end") %>
+
+<!-- Custom Styles -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+<%- include("./partials/__header--end") %>
+<%- include("./partials/__navbar", {page: "dashboard"}) %> 
+<%- include("./partials/__alert", {msg, err}) %> 
+
+
+<div class="container-fluid">
+    <div class="row">
+        <span class="dashboard-menu-button bi bi-columns" ></span>
+        
+        <!-- sidebar navigation -->
+        <%- include('./partials/__sidebar', {user: locals.user}) %>
+
+        <div class="col-12 col-md-9 col-lg-8 container text-end">
+            <h3>مقاله جدید</h3>
+
+            <!-- Article Picture -->
+            <form id="new-article" class="form mt-5" action="/articles" method="POST">
+                
+                <label for="article-title" class="form-label">موضوع مقاله</label>
+                <input id="article-title" class="form-control" type="text" name="title">
+                
+                <input id="article-content" class="form-control d-none" type="textarea" name="content">
+
+                <label for="" class="form-label">عکس مقاله را انتخاب کنید</label>
+                <input class="form-control" type="file" name="picture" id="article-picture">
+                
+                <!-- Article Editor -->
+                <div id="editor">
+                </div>
+                
+                <button class="btn btn-primary mt-3">ذخیره مقاله</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Avatar Change Modal -->
+<%- include("./partials/__modal--avatar", {userId: user._id}) %>
+
+<!-- Import Scripts -->
+<%- include("./partials/__scripts") %>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="/javascripts/article.js"></script>
+<script src="/javascripts/sidebar.js"></script>

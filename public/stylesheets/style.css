@@ -69,6 +69,7 @@ aside {
   border-block-end: 1rem solid #DF4C73;
   border-radius: 10px 50px 0px;
   background-color: white;
+  z-index: 2000;
   color: #DF4C73 !important;
 }
 aside .avatar {

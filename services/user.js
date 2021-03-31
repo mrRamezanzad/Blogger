@@ -52,7 +52,7 @@ exports.update = async (userId, updatedUserInfo, callback) => {
     }
 
     let user
-    try {user = await User.findOneAndUpdate({_id: userId}, {$set: updatedUserInfo})}
+    try {user = await User.findOneAndUpdate({_id: userId}, {$set: updatedUserInfo}, {new: true})}
     catch (err) {return callback(err, user)}
     callback(null, user)
 }
@@ -135,4 +135,10 @@ exports.changeAvatar = async (userId, filename, callback) => {
     } catch (err) {
         if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
     }
+}
+
+// Setting Current User Into Locals For Dashboard Rendering
+exports.setUserInLocals = async (req) => {
+    try { req.locals.user = await this.read(req.session.user._id) }
+    catch (err) { return req.flash("error", err) }
 }

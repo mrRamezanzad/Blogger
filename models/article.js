@@ -9,7 +9,7 @@ const articleSchema = new mongoose.Schema({
         minlength: 3,
         maxlength: 100
     },
-    text: {
+    content: {
         type: String, 
         required: true,
         trim: true,

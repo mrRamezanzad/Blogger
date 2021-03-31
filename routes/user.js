@@ -5,7 +5,7 @@ const express           = require('express'),
       multer            = require('multer'),
       avatarUploader    = require('../tools/uploader'),
       User              = require('../services/user'),
-      {removeOldAvatar} = require('../tools/public')
+      {removeOldAvatar} = require('../tools/general')
 
       
 // ============================Register The User Route============================

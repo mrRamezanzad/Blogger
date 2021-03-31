@@ -1,4 +1,5 @@
-<%- include("./partials/__header", {title: "Edit Profile"}) %>
+<%- include("./partials/__header--start", {title: "Edit Profile"}) %>
+<%- include("./partials/__header--end") %>
 <%- include("./partials/__navbar", {page: "dashboard"}) %> 
 <%- include("./partials/__alert", {msg, err}) %> 
 
@@ -66,3 +67,4 @@
 <!-- Import Scripts -->
 <%- include("./partials/__scripts") %>
 <script src="/javascripts/dashboard.js"></script>
+<script src="/javascripts/sidebar.js"></script>

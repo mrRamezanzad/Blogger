@@ -17,6 +17,7 @@ aside{
     border-block-end:1rem solid $color-red;
     border-radius: 10px 50px 0px;
     background-color: white;
+    z-index: 2000;
     color: $color-red !important;
 
     .avatar{    
