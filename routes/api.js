@@ -1,5 +1,6 @@
-const express = require('express'),
-      router  = express.Router()
+const express           = require('express'),
+      router            = express.Router(),
+      {isAuthorized}    = require('../services/authorization')
 
 // importing All Routes to seperate them
 const view          = require("./view"),
@@ -9,8 +10,8 @@ const view          = require("./view"),
       authorization = require('./authorization')
 
 router.use('/', [view, authorization])
-router.use('/users', user)
-router.use('/articles', article)
-router.use('/comments', comment)
+router.use('/users', isAuthorized, user)
+router.use('/articles', isAuthorized, article)
+router.use('/comments', isAuthorized, comment)
 
 module.exports = router;

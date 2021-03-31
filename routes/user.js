@@ -4,7 +4,8 @@ const express           = require('express'),
       router            = express.Router(),
       multer            = require('multer'),
       avatarUploader    = require('../tools/uploader'),
-      User              = require('../services/user')
+      User              = require('../services/user'),
+      {removeOldAvatar} = require('../tools/public')
 
       
 // ============================Register The User Route============================
@@ -86,7 +87,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 // =========================== Upload Avatar =================================
-router.post('/avatar', (req, res) => {
+router.post('/avatar', async (req, res) => {
     const upload = avatarUploader.single('avatar')
             upload(req, res, function(err) {
                 if (err instanceof multer.MulterError) return res.status(404).send('Server Error!')
@@ -102,8 +103,18 @@ router.post('/avatar', (req, res) => {
                     }
 
                     // If User Had Another Avatar Then Remove It
-                    // let isOldAvatarRemoved = removeAvatar(userId)
-                    
+                    let isOldAvatarRemoved
+                    try {
+                        (async () => {
+                            isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
+                        })()
+
+                    } catch (err) {
+
+                        req.flash('error', "خطایی در پاک کردن عکس قبلی شما وجود دارد" )
+                    }
+
+                    req.session.user.avatar = req.file.filename
                     req.flash('message', "عکس پروفایل شما با موفقیت تغییر کرد" )
                     return res.redirect("/dashboard")
                     

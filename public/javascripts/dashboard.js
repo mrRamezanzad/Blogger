@@ -68,7 +68,7 @@ saveEditedUserButton.on("click", function (e) {
 function getEditedUserInfo () {
     return {
         firstName   : $("[name='firstname']").val(),
-        lastName     : $("[name='lastname']").val(),
+        lastName    : $("[name='lastname']").val(),
         gender      : $("[name='gender']").val(),
         mobile      : $("[name='mobile']").val(),
         username    : $("[name='username']").val()
