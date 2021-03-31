@@ -1,7 +1,11 @@
-const mongoose = require("mongoose"),
-      user     = require("../models/user")
+const mongoose      = require('mongoose'),
+      user          = require('../models/user'),
+      path          = require('path'),
+      fs            = require('fs')
 
-async function adminInitializer (){
+async function initializer (){
+
+    // Create Admin If Doesn't Exists
     let admin    
     try {
         admin = await user.findOne({role: "admin"})
@@ -23,5 +27,10 @@ async function adminInitializer (){
             console.log("[+] Created Admin Successfully");
         })
     }
+
+    // Get The Bug Of Empty Avatar Directory
+    fs.existsSync(path.join(__dirname, "../public/images/avatars")) ||
+    fs.mkdirSync(path.join(__dirname, "../public/images/avatars"))
+    
 }
-adminInitializer()
+initializer()
