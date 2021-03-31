@@ -16,6 +16,9 @@ const articleSchema = new mongoose.Schema({
         minlength: 100,
         maxlength: 1000
     },
+    picture: {
+        type: String,
+    },
     createdAt:{
         type: Date,
         default: Date.now

@@ -17,9 +17,8 @@ $("#new-article").on("submit", function (e) {
   if(!checkArticleTitle()) return 
   $("#article-content").val($(".ql-editor").not('.ql-blank').html())
   if(!checkArticleContent()) return 
-  alert($("#article-content").val())
 
-  if (checkArticleTitle() && checkArticleContent()) alert("i will send form now")
+  if (checkArticleTitle() && checkArticleContent()) this.submit()
 
 })
 

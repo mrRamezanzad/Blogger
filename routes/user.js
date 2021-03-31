@@ -42,6 +42,7 @@ router.put('/:id/', (req, res) => {
         lastName    : req.body.lastName,
         mobile      : req.body.mobile,
         gender      : req.body.gender,
+        lastUpdate  : Date.now()
 
     }
     try {User.update(req.params.id, updatedUserInfo)} 
