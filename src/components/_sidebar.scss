@@ -25,6 +25,20 @@ aside{
         height: 4rem;
         margin: 0 auto;
     }
+
+    .edit-avatar-icon{
+        font-size: 1.4rem;
+        top: 60px;    
+        right: 30%;
+        cursor: pointer;
+        color: orangered;
+        transition: all 250ms;
+        
+        &:hover{
+            color: orange !important;
+            text-shadow: 1px 1px 2px yellow;
+        }
+    }
     
     .nav-link:hover,
     span:hover {

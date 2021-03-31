@@ -14,6 +14,9 @@ const api   = require('./routes/api')
 // Connect To DataBase And Show Proper Messages
 const db = dbConnector("localhost:27017", "final-project")
 
+// Setting Up Admin
+require('./tools/initializer')
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')

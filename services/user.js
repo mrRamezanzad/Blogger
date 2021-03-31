@@ -114,3 +114,25 @@ exports.updatePassword = async (userId, newPassword, callback) => {
     catch (err) {return callback(err, false)}
     callback(null, true)
 }
+
+exports.changeAvatar = async (userId, filename, callback) => {
+    if (typeof callback !== "function") {
+        const func = this.changeAvatar
+        return new Promise((resolve, reject) => {
+           func(userId, filename, (err, result) => {
+               if (err) return reject(err)
+               resolve(result)
+           })
+        })
+    }
+
+    let isUpdated
+    try {
+        isUpdated = await this.update(userId, { avatar: filename} )
+        if (!isUpdated) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
+        callback(null, isUpdated)
+
+    } catch (err) {
+        if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
+    }
+}

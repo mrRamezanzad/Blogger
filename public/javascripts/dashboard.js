@@ -37,6 +37,7 @@ saveEditedUserButton.on("click", function (e) {
     
     // Get New User Data
     let editedUserInfo = getEditedUserInfo()
+    console.log(editedUserInfo);
     $.ajax({
         type: "put",
         url: `/users/${$(this).attr('data-user-id')}`,
@@ -66,7 +67,11 @@ saveEditedUserButton.on("click", function (e) {
 
 function getEditedUserInfo () {
     return {
-        username: $("[name='username']").val()
+        firstName   : $("[name='firstname']").val(),
+        lastName     : $("[name='lastname']").val(),
+        gender      : $("[name='gender']").val(),
+        mobile      : $("[name='mobile']").val(),
+        username    : $("[name='username']").val()
     }
 }
     
@@ -132,4 +137,9 @@ $(".dashboard-menu-button").on("click", function (e) {
     $(this).toggleClass("bi-columns-gap bi-columns")
     $("#dashboard-menu").toggleClass("d-none")
 
+})
+
+// bring modal to change profile picture
+$(".edit-avatar-icon").on("click", function (e) {
+    console.log("chagne damn avatar");
 })

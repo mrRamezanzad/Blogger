@@ -39,6 +39,9 @@ const userSchema = new mongoose.Schema({
         type        : String,
         required    : true
     },
+    avatar: {
+        type        : String,
+    },
     lastUpdate: {
         type        : Date,
         default     : Date.now
@@ -57,10 +60,9 @@ userSchema.pre("save", function (next) {
     
     // Encrypt Password And Save It To DataBase
     bcrypt.hash(user.password, 12, (err, hash) => {
-        if(err) return next(new Error("there was a problem with password"))
+        if(err) return next(new Error("مشکلی در کدسازی پسورد وجود دارد"))
         user.password = hash
         next()
-        
     })
 })
 

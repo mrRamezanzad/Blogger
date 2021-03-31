@@ -77,6 +77,18 @@ aside .avatar {
   height: 4rem;
   margin: 0 auto;
 }
+aside .edit-avatar-icon {
+  font-size: 1.4rem;
+  top: 60px;
+  right: 30%;
+  cursor: pointer;
+  color: orangered;
+  transition: all 250ms;
+}
+aside .edit-avatar-icon:hover {
+  color: orange !important;
+  text-shadow: 1px 1px 2px yellow;
+}
 aside .nav-link:hover,
 aside span:hover {
   transition: all 200ms linear;

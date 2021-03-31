@@ -9,8 +9,8 @@ const view          = require("./view"),
       authorization = require('./authorization')
 
 router.use('/', [view, authorization])
-router.use('/users/', user)
-router.use('/articles/', article)
-router.use('/comments/', comment)
+router.use('/users', user)
+router.use('/articles', article)
+router.use('/comments', comment)
 
 module.exports = router;

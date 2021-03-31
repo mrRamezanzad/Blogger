@@ -1,21 +1,28 @@
-const express   = require('express'),
-      router    = express.Router(),
-      User      = require('../services/user')
+const { remove } = require('../models/user')
+
+const express           = require('express'),
+      router            = express.Router(),
+      multer            = require('multer'),
+      avatarUploader    = require('../tools/uploader'),
+      User              = require('../services/user')
+
       
 // ============================Register The User Route============================
 router.post('/', async (req, res) => {
     let signupPattern = ["username", "password"]
     let inputKeys = Object.keys(req.body)  
-          
+
     // Check If All The Required Data Is Passed
-    let isDataValid =signupPattern.every((key) => {return inputKeys.includes(key) && req.body[key]})
+    let isDataValid = signupPattern.every((key) => {return inputKeys.includes(key) && req.body[key]})
     
     if(!isDataValid) {
         req.flash('error', "مقادیر ورودی را چک کنید")
         return res.status(400).redirect('register')
     }
     
-    try {await User.create(req.body)}
+    try {
+        await User.create(req.body)}
+
     catch (err) {
         req.flash('error', "مشکلی در ثبت نام شما وجود دارد")
         return res.status(500).redirect('/register/')
@@ -27,9 +34,15 @@ router.post('/', async (req, res) => {
 
 // ============================Edit Account Route============================
 router.put('/:id/', (req, res) => {
-    
     // Sanitize The Updated User Information
-    let updatedUserInfo = {username: req.body.username}
+    let updatedUserInfo = {
+        username    : req.body.username,
+        firstName   : req.body.firstName,
+        lastName    : req.body.lastName,
+        mobile      : req.body.mobile,
+        gender      : req.body.gender,
+
+    }
     try {User.update(req.params.id, updatedUserInfo)} 
     catch (err) {return res.status(500).json({err: "تغییرات نا موفق بود"})}
     res.json({msg: "اکانت شما با موفقیت آپدیت شد"})
@@ -61,7 +74,7 @@ router.patch('/', async (req, res) => {
 })
 
 // ============================Delete Account Route============================
-router.delete('/:id/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     
     const userId = req.params.id
     try{isDeleted = await User.delete(userId)}
@@ -71,5 +84,34 @@ router.delete('/:id/', async (req, res) => {
     res.status(200).json({msg: "به امید دیدار"})  
 
 })
+
+// =========================== Upload Avatar =================================
+router.post('/avatar', (req, res) => {
+    const upload = avatarUploader.single('avatar')
+            upload(req, res, function(err) {
+                if (err instanceof multer.MulterError) return res.status(404).send('Server Error!')
+                if (err) return res.status(406).send(err.message)
+
+                // Change Profile Picture Of User
+                let isAvatarChanged
+                try {
+                    isAvatarChanged = User.changeAvatar(req.session.user._id, req.file.filename)
+                    if (!isAvatarChanged) {
+                        req.flash('error', "عکس پروفایل شما آپدیت نشد" )
+                        return res.redirect("/dashboard/edit")
+                    }
+
+                    // If User Had Another Avatar Then Remove It
+                    // let isOldAvatarRemoved = removeAvatar(userId)
+                    
+                    req.flash('message', "عکس پروفایل شما با موفقیت تغییر کرد" )
+                    return res.redirect("/dashboard")
+                    
+                } catch (err) {
+                    req.flash('error', "خطایی در تعویض عکس پروفایل شما رخ داده است" )
+                    return res.redirect("/dashboard/edit")
+                }
+            })
+})  
 
 module.exports = router
