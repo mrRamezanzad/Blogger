@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'),
+const mongoose = require('mongoose')
 
 // TODO: Check for neccessary fields in article 
 const articleSchema = new mongoose.Schema({
@@ -13,8 +13,8 @@ const articleSchema = new mongoose.Schema({
         type: String, 
         required: true,
         trim: true,
-        minlength: 100,
-        maxlength: 1000
+        minlength: 10,
+        // maxlength: 1000
     },
     picture: {
         type: String,
@@ -34,4 +34,4 @@ const articleSchema = new mongoose.Schema({
     }
 })
 
-module.exports = moongoose.model("Article", articleSchema)
+module.exports = mongoose.model("Article", articleSchema)

@@ -11,7 +11,7 @@ const express           = require('express'),
       }                 = require('../tools/general')
 
       
-// ============================Register The User ============================
+// ============================ Register The User ============================
 router.post('/', async (req, res) => {
     let signupPattern = ["username", "password"]
     let inputKeys = Object.keys(req.body)  
@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
     res.redirect('/login/')
 })
 
-// ============================Edit User ============================
+// ============================ Edit User ============================
 router.put('/:id/', (req, res) => {
     // Sanitize The Updated User Information
     let updatedUserInfo = {
@@ -81,7 +81,7 @@ router.patch('/', async (req, res) => {
        
 })
 
-// ============================Delete Account ============================
+// ============================ Delete Account ============================
 router.delete('/:id', async (req, res) => {
     
     const userId = req.params.id
@@ -95,41 +95,41 @@ router.delete('/:id', async (req, res) => {
 
 // =========================== Upload Avatar =================================
 router.post('/avatar', async (req, res) => {
-    const upload = avatarUploader.single('avatar')
-            upload(req, res, function(err) {
-                if (err instanceof multer.MulterError) return res.status(404).send('Server Error!')
-                if (err) return res.status(406).send(err.message)
+    const uploadAvatar = avatarUploader.single('avatar')
+    uploadAvatar(req, res, function(err) {
+        if (err instanceof multer.MulterError) return res.status(500).send('Server Error!')
+        if (err) return res.status(500).send(err.message)
 
-                // Change Profile Picture Of User
-                let isAvatarChanged
-                try {
-                    isAvatarChanged = User.changeAvatar(req.session.user._id, req.file.filename)
-                    if (!isAvatarChanged) {
-                        req.flash('error', "عکس پروفایل شما آپدیت نشد" )
-                        return res.redirect("/dashboard/edit")
-                    }
+        // Change Profile Picture Of User
+        let isAvatarChanged
+        try {
+            isAvatarChanged = User.changeAvatar(req.session.user._id, req.file.filename)
+            if (!isAvatarChanged) {
+                req.flash('error', "عکس پروفایل شما آپدیت نشد" )
+                return res.redirect("/dashboard/edit")
+            }
 
-                    // If User Had Another Avatar Then Remove It
-                    let isOldAvatarRemoved
-                    try {
-                        (async () => {
-                            isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
-                        })()
+            // If User Had Another Avatar Then Remove It
+            let isOldAvatarRemoved
+            try {
+                (async () => {
+                    isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
+                })()
 
-                    } catch (err) {
+            } catch (err) {
 
-                        req.flash('error', "خطایی در پاک کردن عکس قبلی شما وجود دارد" )
-                    }
+                req.flash('error', "خطایی در پاک کردن عکس قبلی شما وجود دارد" )
+            }
 
-                    req.session.user.avatar = req.file.filename
-                    req.flash('message', "عکس پروفایل شما با موفقیت تغییر کرد" )
-                    return res.redirect("/dashboard")
-                    
-                } catch (err) {
-                    req.flash('error', "خطایی در تعویض عکس پروفایل شما رخ داده است" )
-                    return res.redirect("/dashboard/edit")
-                }
-            })
+            req.session.user.avatar = req.file.filename
+            req.flash('message', "عکس پروفایل شما با موفقیت تغییر کرد" )
+            return res.redirect("/dashboard")
+            
+        } catch (err) {
+            req.flash('error', "خطایی در تعویض عکس پروفایل شما رخ داده است" )
+            return res.redirect("/dashboard/edit")
+        }
+    })
 })  
 
 module.exports = router

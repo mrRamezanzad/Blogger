@@ -24,7 +24,7 @@ const articlePictureStorage = multer.diskStorage({
         next(null, path.join(__dirname, '../public/images/articles'))
     },
     filename: function (req, file, next) {
-        next(null, `${req.body.title}-${Date.now()}-${file.originalname}}`)
+        next(null, `${req.body.title}-${Date.now()}-${file.originalname}`)
     }
 })
 

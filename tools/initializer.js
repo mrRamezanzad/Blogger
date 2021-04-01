@@ -32,5 +32,9 @@ async function initializer (){
     fs.existsSync(path.join(__dirname, "../public/images/avatars")) ||
     fs.mkdirSync(path.join(__dirname, "../public/images/avatars"))
     
+    // Get The Bug Of Empty Articles Image Directory
+    fs.existsSync(path.join(__dirname, "../public/images/articles")) ||
+    fs.mkdirSync(path.join(__dirname, "../public/images/articles"))
+    
 }
 initializer()
