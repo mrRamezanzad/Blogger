@@ -28,3 +28,13 @@ exports.removeOldAvatar = async (filename, callback) => {
     return callback(null, true)
 
 }
+
+exports.updateUserInSession = (userInSession, updatedUserInfo) => {
+    
+    userInSession.firstName  = updatedUserInfo.firstName
+    userInSession.lastName   = updatedUserInfo.lastName
+    userInSession.username   = updatedUserInfo.username
+    userInSession.mobile     = updatedUserInfo.mobile
+    userInSession.gender     = updatedUserInfo.gender
+    userInSession.lastUpdate = updatedUserInfo.lastUpdate
+}

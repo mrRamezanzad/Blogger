@@ -39,10 +39,13 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(flash())
 
-// Clear Cookie If There Is No Session On Server
+// Clear Cookie If There Is No Session On Server And Giving User Info To Renders
 app.use((req, res, next) => {
+  if(!req.session.user && req.cookies.sid) {
+    res.clearCookie("sid")
+    return next()
+  }
   res.locals.user = req.session.user
-  if(!req.session.user && req.cookies.sid) res.clearCookie("sid")
   next()
 })
 

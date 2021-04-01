@@ -3,12 +3,15 @@ const { remove } = require('../models/user')
 const express           = require('express'),
       router            = express.Router(),
       multer            = require('multer'),
-      avatarUploader    = require('../tools/uploader'),
+      {avatarUploader}  = require('../tools/uploader'),
       User              = require('../services/user'),
-      {removeOldAvatar} = require('../tools/general')
+      {
+        removeOldAvatar,
+        updateUserInSession
+      }                 = require('../tools/general')
 
       
-// ============================Register The User Route============================
+// ============================Register The User ============================
 router.post('/', async (req, res) => {
     let signupPattern = ["username", "password"]
     let inputKeys = Object.keys(req.body)  
@@ -33,7 +36,7 @@ router.post('/', async (req, res) => {
     res.redirect('/login/')
 })
 
-// ============================Edit Account Route============================
+// ============================Edit User ============================
 router.put('/:id/', (req, res) => {
     // Sanitize The Updated User Information
     let updatedUserInfo = {
@@ -45,12 +48,15 @@ router.put('/:id/', (req, res) => {
         lastUpdate  : Date.now()
 
     }
-    try {User.update(req.params.id, updatedUserInfo)} 
-    catch (err) {return res.status(500).json({err: "تغییرات نا موفق بود"})}
+    try {
+        User.update(req.params.id, updatedUserInfo)
+        updateUserInSession(req.session.user, updatedUserInfo)
+
+    } catch (err) {return res.status(500).json({err: "تغییرات نا موفق بود"})}
     res.json({msg: "اکانت شما با موفقیت آپدیت شد"})
 })
 
-// ============================ Change Password Route============================
+// ============================ Change Password ============================
 router.patch('/', async (req, res) => {
     const userId          = req.session.user._id,
           currentPassword = req.body.currentPassword,
@@ -75,7 +81,7 @@ router.patch('/', async (req, res) => {
        
 })
 
-// ============================Delete Account Route============================
+// ============================Delete Account ============================
 router.delete('/:id', async (req, res) => {
     
     const userId = req.params.id

@@ -23,19 +23,16 @@ router.get('/login/', checkLogin, (req, res) => {
 
 // ============================ Dashboard ============================
 router.get('/dashboard/', isAuthorized, async (req, res) => {
-  User.setUserInLocals(req)
   res.render('dashboard--profile', {msg: req.flash('message'), err: req.flash('error')})
 })
 
 // ============================ Dashboard Edit ============================
 router.get('/dashboard/edit/', isAuthorized, async (req, res) => {
-  User.setUserInLocals(req)
   res.render('dashboard--edit', {msg: req.flash('message'), err: req.flash('error')})
 })
 
 // ============================ New Article ============================
 router.get('/new', isAuthorized, (req, res) => {
-  User.setUserInLocals(req)
   res.render('article--create', {msg: req.flash('message'), err: req.flash('error')})
 })
 

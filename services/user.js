@@ -136,9 +136,3 @@ exports.changeAvatar = async (userId, filename, callback) => {
         if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
     }
 }
-
-// Setting Current User Into Locals For Dashboard Rendering
-exports.setUserInLocals = async (req) => {
-    try { req.locals.user = await this.read(req.session.user._id) }
-    catch (err) { return req.flash("error", err) }
-}
