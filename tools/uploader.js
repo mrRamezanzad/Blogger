@@ -1,3 +1,4 @@
+// ===================== Avatar Uploading Setups =====================
 const multer        = require('multer'),
       path          = require('path')
 
@@ -19,6 +20,7 @@ const avatarFilter = function (req, file, next) {
 
 exports.avatarUploader = multer ({storage: avatarStorage, filter: avatarFilter})
 
+// ===================== Article Uploading Setups =====================
 const articlePictureStorage = multer.diskStorage({
     destination: function (req, file, next) {
         next(null, path.join(__dirname, '../public/images/articles'))

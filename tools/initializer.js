@@ -6,27 +6,26 @@ const mongoose      = require('mongoose'),
 async function initializer (){
 
     // Create Admin If Doesn't Exists
-    let admin    
     try {
-        admin = await user.findOne({role: "admin"})
+        let admin = await user.findOne({role: "admin"})
+        if (!admin) {
+            admin = new user({
+                firstName       : "Shahin",
+                lastName        : "Barekat", 
+                username        : "admin", 
+                password        : "admin", 
+                gender          : "male",
+                mobile          : "09192345568",
+                role            : "admin"
+    
+            }).save((err) => {
+                if (err) return console.log("[+] There was a Problem Creating Admin ====>", err);
+                console.log("[+] Created Admin Successfully");
+            })
+        }
 
     } catch (err) { return console.log(err)}
     
-    if (!admin) {
-        admin = new user({
-            firstName       : "Shahin",
-            lastName        : "Barekat", 
-            username        : "admin", 
-            password        : "admin", 
-            gender          : "male",
-            mobile          : "09192345568",
-            role            : "admin"
-
-        }).save((err) => {
-            if (err) return console.log("[+] There was a Problem Creating Admin ====>", err);
-            console.log("[+] Created Admin Successfully");
-        })
-    }
 
     // Get The Bug Of Empty Avatar Directory
     fs.existsSync(path.join(__dirname, "../public/images/avatars")) ||

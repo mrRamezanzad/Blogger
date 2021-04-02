@@ -21,7 +21,6 @@ exports.removeOldAvatar = async (filename, callback) => {
             return callback(null, true)
 
         } catch (err) {
-            console.log(err);
             return callback("مشکلی در پاک کردن عکس پروفایل قدیمی وجود دارد", false)
         }
     }
