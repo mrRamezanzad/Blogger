@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
                 picture     : req.file.filename, 
                 author      : req.session.user._id
             })
-            req.flash('message', "مفاله جدید با موفقیت ذخیره شد")
+            req.flash('message', "مقاله جدید با موفقیت ذخیره شد")
             res.redirect(`/articles/${newArticle._id}`)
 
         } catch (err) {
@@ -35,11 +35,11 @@ router.post('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     let requestedArticleId = req.params.id,
         article
     try {
-        article = Article.read(requestedArticleId)
+        article = await Article.read(requestedArticleId)
         res.render('article', {msg: req.flash('message'), err: req.flash('error'), article})
     } catch (err) {
         res.status(500).render('article', {msg: req.flash('message'), err: req.flash('error'), article})
