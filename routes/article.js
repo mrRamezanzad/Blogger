@@ -46,4 +46,16 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.get('/', async (req, res) => {
+    let articles 
+    try {
+        articles = await Article.readAll({})
+        res.render('article--list', {err: req.flash('error'), msg: req.flash('message'), articles})
+
+    } catch (err) {
+        req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")
+        res.status(500).redirect('/dashboard')
+    }
+})
+
 module.exports = router;

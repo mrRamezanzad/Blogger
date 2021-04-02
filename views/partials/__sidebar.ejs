@@ -9,7 +9,7 @@
     <div class="edit-avatar-icon bi bi-pencil position-absolute" data-bs-target="#profile-picture-modal" data-bs-toggle="modal"></div>
     <ul class="list">
         <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/new">مقاله جدید</a></li>
-        <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/articles/<%= user._id %>">لیست مقالات من</a></li>
-        <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/articles">مقالات دیگران</a></li>
+        <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/users/<%= locals.user._id %>/articles">لیست مقالات من</a></li>
+        <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/articles/">لیست تمامی مقالات</a></li>
     </ul>
 </aside>

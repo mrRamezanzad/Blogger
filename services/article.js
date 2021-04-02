@@ -6,7 +6,7 @@ exports.create = async (newArticleInfo, callback) => {
         const func = this.create
         return new Promise ((resolve, reject) => {
             func(newArticleInfo, (err, doc) => {
-                if (err) return reject(err)
+                if (err) reject(err)
                 resolve(doc)
             })
         })
@@ -20,7 +20,7 @@ exports.create = async (newArticleInfo, callback) => {
 
 exports.read = async (articleId, callback) => {
     if (typeof callback !== "function") {
-        func = this.read
+        const func = this.read
         return new Promise((resolve, reject) => {
             func(articleId, (err, doc) => {
                 if (err) reject(err)
@@ -38,4 +38,25 @@ exports.read = async (articleId, callback) => {
         console.log(err);
         callback("مشکلی در پیدا کردن مفاله وجود دارد", article)
     } 
+}
+
+exports.readAll = async (match, callback) => {
+    if (typeof callback !== "function") {
+        const func = this.readAll
+        return new Promise((resolve, reject) => {
+            func(match, (err, articles) => {
+                if(err) reject(err)
+                resolve(articles)
+            })
+        })
+    }
+
+    let articles
+    try {
+        articles = await Article.find(match)
+        callback(null, articles)
+
+    } catch (err) {
+        callback("مشکلی در حین پیدا کردن مقالات بوجود آمده است", articles)
+    }
 }
