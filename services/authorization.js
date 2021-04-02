@@ -9,27 +9,27 @@ async function logUserIn (userInfo, callback) {
         const func = logUserIn
         return new Promise((resolve, reject) => {
            func(userInfo, (err, result) => {
-               if (err) return reject(err)
+               if (err) reject(err)
                resolve(result)
            })
         })
     }
     
-    let user
-    try {user = await User.findOne({username: userInfo.username})}
-    catch (err) {return callback(err, user)}
-    if(!user) return callback("کاربری با این مشخصات وجود ندارد", user)
+    try {
+        let user = await User.findOne({username: userInfo.username})
+        if(!user) return callback("کاربری با این مشخصات وجود ندارد", user)
+
+        let isMatch = await bcrypt.compare(userInfo.password, user.password)
+        if(!isMatch) return callback("لطفاً رمز ورودی خود را چک کنید", user)
+        callback(null, user)
+
+    } catch (err) {return callback(err, null)}
     
-    let isMatch 
-    try {isMatch = await bcrypt.compare(userInfo.password, user.password)}
-    catch (err) {return callback(err, user)}
-    if(!isMatch) return callback("لطفاً رمز ورودی خود را چک کنید", user)
-    callback(null, user)
 }
 
 function logUserOut (req, res) {
     res.clearCookie('sid')
-    res.redirect('/login/')
+    res.redirect('/login')
 }
 
 function checkLogin (req, res, next) {
@@ -42,5 +42,5 @@ function checkLogin (req, res, next) {
 function isAuthorized (req, res, next){
     // If Request Has Session And Cookie Then Allow It
     if(req.session.user && req.cookies.sid) return next()
-    res.redirect("/login/")
+    res.redirect("/login")
 }

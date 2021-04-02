@@ -7,7 +7,7 @@ exports.create  = async (userInfo, callback) => {
         const func = this.create
         return new Promise((resolve, reject) => {
            func(userInfo, (err, result) => {
-               if (err) return reject(err)
+               if (err) reject(err)
                resolve(result)
            })
         })
@@ -22,6 +22,7 @@ exports.create  = async (userInfo, callback) => {
         mobile      : userInfo.mobile,
 
     }).save(callback)
+    
 }
 
 exports.read = async (userId, callback = "") => {
@@ -29,16 +30,17 @@ exports.read = async (userId, callback = "") => {
         const func = this.read
         return new Promise((resolve, reject) => {
             func (userId, (err, result) => {
-                if (err) return reject(err)
+                if (err) reject(err)
                 resolve(result)
             })
         })
     }
 
-    let user
-    try {user = await User.findById(userId)}
-    catch (err) {return callback("مشکلی در پیدا کردن اطلاعات کابری بوجود آمده است.", user)}
-    callback(null, user)
+    try {
+        let user = await User.findById(userId)
+        callback(null, user)
+
+    } catch (err) { callback("مشکلی در پیدا کردن اطلاعات کابری بوجود آمده است.", null)}
 }
 
 exports.update = async (userId, updatedUserInfo, callback) => {
@@ -46,16 +48,17 @@ exports.update = async (userId, updatedUserInfo, callback) => {
         const func = this.update
         return new Promise((resolve, reject) => {
            func(userId, updatedUserInfo, (err, result) => {
-               if (err) return reject(err)
+               if (err) reject(err)
                resolve(result)
            })
         })
     }
 
-    let user
-    try {user = await User.findOneAndUpdate({_id: userId}, {$set: updatedUserInfo}, {new: true})}
-    catch (err) {return callback(err, user)}
-    callback(null, user)
+    try {
+        let user = await User.findOneAndUpdate({_id: userId}, {$set: updatedUserInfo}, {new: true})
+        callback(null, user)
+
+    } catch (err) { callback(err, null)}
 }
 
 exports.delete = async (userId, callback) => {
@@ -63,15 +66,17 @@ exports.delete = async (userId, callback) => {
         const func = this.delete
         return new Promise((resolve, reject) => {
            func(userId, (err, result) => {
+               if (err) reject(err)
                resolve(result)
            })
         })
     }
 
-    let user
-    try {user = await User.remove({_id: userId})} 
-    catch (err) {return callback(err, false)}
-    callback(null, true)
+    try {
+        User.remove({_id: userId})
+        callback(null, true)
+
+    } catch (err) {return callback(err, false)}
 }
 
 exports.comparePassword = async (userId, enteredPassword, callback) => {
@@ -79,20 +84,19 @@ exports.comparePassword = async (userId, enteredPassword, callback) => {
         const func = this.comparePassword
         return new Promise((resolve, reject) => {
            func(userId, enteredPassword, (err, result) => {
-               if (err) return reject(err)
+               if (err) reject(err)
                resolve(result)
            })
         })
     }
 
-    let user
-    try {user = await this.read(userId)}
-    catch (err) {return callback(err, false)}
+    try {
+        let user    = await this.read(userId),
+            isMatch = await bcrypt.compare(enteredPassword, user.password)
+        callback(null, isMatch)
 
-    let isMatch 
-    try{isMatch = await bcrypt.compare(enteredPassword, user.password)}
-    catch(err){return callback(err, isMatch)}
-    callback(null, isMatch)
+    } catch (err) {return callback(err, false)}
+
 }
 
 exports.updatePassword = async (userId, newPassword, callback) => {
@@ -100,20 +104,20 @@ exports.updatePassword = async (userId, newPassword, callback) => {
         const func = this.updatePassword
         return new Promise((resolve, reject) => {
            func(userId, newPassword, (err, result) => {
-               if (err) return reject(err)
+               if (err) reject(err)
                resolve(result)
            })
         })
     }
 
-    let user
-    try {user = await User.findById({_id: userId})}
-    catch (err) {return callback(err, false)}
+    try {
+        let user = await User.findById({_id: userId})
+        user.password = newPassword
+        user = await user.save()
+        callback(null, true)
 
-    user.password = newPassword
-    try {user = await user.save()}
-    catch (err) {return callback(err, false)}
-    callback(null, true)
+    } catch (err) {return callback(err, false)}
+
 }
 
 exports.changeAvatar = async (userId, filename, callback) => {
@@ -121,20 +125,19 @@ exports.changeAvatar = async (userId, filename, callback) => {
         const func = this.changeAvatar
         return new Promise((resolve, reject) => {
            func(userId, filename, (err, result) => {
-               if (err) return reject(err)
+               if (err) reject(err)
                resolve(result)
            })
         })
     }
 
-    let isUpdated
     try {
-        isUpdated = await this.update(userId, { avatar: filename} )
+        let isUpdated = await this.update(userId, { avatar: filename} )
         if (!isUpdated) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
         callback(null, isUpdated)
 
     } catch (err) {
-        if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
+        if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", false)
     }
 }
 
@@ -142,19 +145,18 @@ exports.getUserArticles = async (userId, callback) => {
     if (typeof callback !== "function") {
         const func = this.getUserArticles
         return new Promise((resolve, reject) => {
-            func(userId, (err, articles) => {
+            func(userId, (err, result) => {
                 if (err) reject(err)
-                resolve(articles)
+                resolve(result)
             })
         })
     }
 
-    let articles
     try {
-        articles = await Article.readAll({author: userId})
+        let articles = await Article.readAll({author: userId})
         callback(null, articles)
 
     } catch (err) {
-        callback("مشکلی در یافتن مقالات این کاربر وجود دارد", articles)
+        callback("مشکلی در یافتن مقالات این کاربر وجود دارد", null)
     }
 }
