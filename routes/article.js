@@ -19,23 +19,31 @@ router.post('/', (req, res) => {
         let inputArticle = req.body,
             newArticle 
         try {
-            console.log(req);
             newArticle = await Article.create({
                 title       : inputArticle.title,
                 content     : inputArticle.content,
                 picture     : req.file.filename, 
                 author      : req.session.user._id
             })
-            console.log(newArticle);
             req.flash('message', "مفاله جدید با موفقیت ذخیره شد")
-            res.redirect('/new')
+            res.redirect(`/articles/${newArticle._id}`)
 
         } catch (err) {
             req.flash('error', "مشکلی در ساخت مقاله بوجود آمده است")
             res.status(500).redirect('/new')
         }
     })
+})
 
+router.get('/:id', (req, res) => {
+    let requestedArticleId = req.params.id,
+        article
+    try {
+        article = Article.read(requestedArticleId)
+        res.render('article', {msg: req.flash('message'), err: req.flash('error'), article})
+    } catch (err) {
+        res.status(500).render('article', {msg: req.flash('message'), err: req.flash('error'), article})
+    }
 })
 
 module.exports = router;

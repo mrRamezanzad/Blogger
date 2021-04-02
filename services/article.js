@@ -17,3 +17,25 @@ exports.create = async (newArticleInfo, callback) => {
         return callback(null, doc)
     } )
 }
+
+exports.read = async (articleId, callback) => {
+    if (typeof callback !== "function") {
+        func = this.read
+        return new Promise((resolve, reject) => {
+            func(articleId, (err, doc) => {
+                if (err) reject(err)
+                resolve(doc)
+            })
+        })
+    }
+    
+    let article 
+    try {
+        article = await Article.findById({_id: articleId})
+        callback(null, article)
+
+    } catch (err) {
+        console.log(err);
+        callback("مشکلی در پیدا کردن مفاله وجود دارد", article)
+    } 
+}
