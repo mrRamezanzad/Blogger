@@ -1,4 +1,5 @@
 const User      = require('../models/user'),
+      Article   = require('../services/article'),
       bcrypt    = require('bcrypt') 
 
 exports.create  = async (userInfo, callback) => {
@@ -134,5 +135,26 @@ exports.changeAvatar = async (userId, filename, callback) => {
 
     } catch (err) {
         if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", isUpdated)
+    }
+}
+
+exports.getUserArticles = async (userId, callback) => {
+    if (typeof callback !== "function") {
+        const func = this.getUserArticles
+        return new Promise((resolve, reject) => {
+            func(userId, (err, articles) => {
+                if (err) reject(err)
+                resolve(articles)
+            })
+        })
+    }
+
+    let articles
+    try {
+        articles = await Article.readAll({author: userId})
+        callback(null, articles)
+
+    } catch (err) {
+        callback("مشکلی در یافتن مقالات این کاربر وجود دارد", articles)
     }
 }
