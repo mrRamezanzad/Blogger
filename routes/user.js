@@ -1,15 +1,10 @@
-const { remove } = require('../models/user')
-
 const express           = require('express'),
       router            = express.Router(),
       multer            = require('multer'),
       {avatarUploader}  = require('../tools/uploader'),
-      User              = require('../services/user'),
-      {
-        removeOldAvatar,
-        updateUserInSession
-      }                 = require('../tools/general')
-
+      User              = require('../services/user')
+      
+const {removeOldAvatar, updateUserInSession} = require('../tools/general')
       
 // ============================ Register The User ============================
 router.post('/', async (req, res) => {
@@ -25,15 +20,14 @@ router.post('/', async (req, res) => {
     }
     
     try {
-        await User.create(req.body)}
-
-    catch (err) {
+        await User.create(req.body)
+        req.flash('message', "اکانت شما با موفقیت ساخته شد")
+        res.redirect('/login/')
+        
+    } catch (err) {
         req.flash('error', "مشکلی در ثبت نام شما وجود دارد")
-        return res.status(500).redirect('/register/')
+        res.status(500).redirect('/register/')
     }
-    
-    req.flash('message', "اکانت شما با موفقیت ساخته شد")
-    res.redirect('/login/')
 })
 
 // ============================ Edit User ============================
@@ -51,9 +45,9 @@ router.put('/:id/', (req, res) => {
     try {
         User.update(req.params.id, updatedUserInfo)
         updateUserInSession(req.session.user, updatedUserInfo)
+        res.json({msg: "اکانت شما با موفقیت آپدیت شد"})
 
     } catch (err) {return res.status(500).json({err: "تغییرات نا موفق بود"})}
-    res.json({msg: "اکانت شما با موفقیت آپدیت شد"})
 })
 
 // ============================ Change Password ============================
@@ -62,35 +56,31 @@ router.patch('/', async (req, res) => {
           currentPassword = req.body.currentPassword,
           newPassword     = req.body.newPassword
             
-    let isMatch
-    try {isMatch = await User.comparePassword(userId, currentPassword)} 
-    catch (err) {return res.status(500).send("خطایی در سمت سرور رخ داده است")}
-    
-    if (!isMatch) return res.status(401).send("پسورد وارد شده معتبر نمی باشد")
-    
-    let isChanged
-    try {isChanged = await User.updatePassword(userId, newPassword)}
+    try {
+        let isMatch = await User.comparePassword(userId, currentPassword)
+        if (!isMatch) return res.status(401).send("پسورد وارد شده معتبر نمی باشد")
+
+        let isChanged = await User.updatePassword(userId, newPassword)
+        if (!isChanged) return res.status(500).send("رمز شما تغییر نکرد")
+
+        res.clearCookie("sid")
+        res.send("پسورد با موفقیت تغییر کرد، لطفاً مجدداً وارد شوید")
+    } 
     catch (err) {
         if(err.errors.password.kind === 'minlength') return res.status(400).send("رمز جدید باید بزرگتر از 5 حرف باشد")
-        return res.status(500).send("خطایی در سمت سرور رخ داده")
+        return res.status(500).send("خطایی در سمت سرور رخ داده است")
     }
-
-    if (!isChanged) return res.status(500).send("رمز شما تغییر نکرد")
-    res.clearCookie("sid")
-    res.send("پسورد با موفقیت تغییر کرد، لطفاً مجدداً وارد شوید")
-       
 })
 
 // ============================ Delete Account ============================
 router.delete('/:id', async (req, res) => {
-    
     const userId = req.params.id
-    try{isDeleted = await User.delete(userId)}
+    try{
+        isDeleted = await User.delete(userId)
+        res.clearCookie('sid')
+        res.status(200).json({msg: "به امید دیدار"})  
+    }
     catch (err) {return res.status(500).json({err: "در این لحظه امکان حذف اکانت وجود ندارد"})}
-
-    res.clearCookie('sid')
-    res.status(200).json({msg: "به امید دیدار"})  
-
 })
 
 // =========================== Upload Avatar =================================
@@ -101,9 +91,8 @@ router.post('/avatar', async (req, res) => {
         if (err) return res.status(500).send(err.message)
 
         // Change Profile Picture Of User
-        let isAvatarChanged
         try {
-            isAvatarChanged = User.changeAvatar(req.session.user._id, req.file.filename)
+            let isAvatarChanged = User.changeAvatar(req.session.user._id, req.file.filename)
             if (!isAvatarChanged) {
                 req.flash('error', "عکس پروفایل شما آپدیت نشد" )
                 return res.redirect("/dashboard/edit")
@@ -111,31 +100,24 @@ router.post('/avatar', async (req, res) => {
 
             // If User Had Another Avatar Then Remove It
             let isOldAvatarRemoved
-            try {
-                (async () => {
-                    isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
-                })()
-
-            } catch (err) {
-
-                req.flash('error', "خطایی در پاک کردن عکس قبلی شما وجود دارد" )
-            }
-
+            (async () => {
+                isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
+            })()
+            
             req.session.user.avatar = req.file.filename
             req.flash('message', "عکس پروفایل شما با موفقیت تغییر کرد" )
-            return res.redirect("/dashboard")
+            res.redirect("/dashboard")
             
         } catch (err) {
             req.flash('error', "خطایی در تعویض عکس پروفایل شما رخ داده است" )
-            return res.redirect("/dashboard/edit")
+            res.redirect("/dashboard/edit")
         }
     })
 })  
 
 router.get('/:id/articles', async (req, res) => {
-    let articles
     try {
-        articles = await User.getUserArticles(req.session.user._id)
+        let articles = await User.getUserArticles(req.session.user._id)
         res.render('article--list', {err: req.flash('error'), msg: req.flash('message'), articles})
 
     } catch (err) {

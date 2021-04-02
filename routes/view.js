@@ -1,11 +1,9 @@
 const express = require('express'),
       router  = express.Router(),
-      {
-        isAuthorized,
-        checkLogin
-      }    = require('../services/authorization'),
-      User = require('../services/user')
-
+      User    = require('../services/user')
+      
+const {isAuthorized, checkLogin} = require('../services/authorization')
+// TODO: Refactor The Repeating Flash Messages In Rendering
 // ============================ Home ============================
 router.get('/', function(req, res, next) {
   res.render('index', {msg: req.flash('message'), err: req.flash('error')});
