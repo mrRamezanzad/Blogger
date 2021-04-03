@@ -30,7 +30,7 @@ const articleSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        refrence: 'User'
+        ref: 'User'
     }
 })
 

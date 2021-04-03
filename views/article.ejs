@@ -16,13 +16,10 @@
         <!-- sidebar navigation -->
         <%- include('./partials/__sidebar', {user: locals.user}) %>
 
-        <div class="col-12 col-md-9 col-lg-8 container text-end">
-            <h3><%= article.title %> </h3>
-            <img src="/images/articles/<%= article.picture %> " alt="article picture">
-            <p><%- article.content %> </p>
-            <p> article.date</p>
-            <button class="btn btn-warning">تغییر</button><button class="btn btn-danger">حذف</button>
-        </div>
+        <!-- Rendering Article -->
+        <%- include('./partials/__article', {article})  %> 
+
+        
     </div>
 </div>
 

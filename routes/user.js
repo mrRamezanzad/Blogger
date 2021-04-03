@@ -9,7 +9,7 @@ const {removeOldAvatar, updateUserInSession} = require('../tools/general')
 // ============================ Register The User ============================
 router.post('/', async (req, res) => {
     let signupPattern   = ["username", "password"],
-        inputKeys       = Object.keys(req.body)  
+        inputKeys       = Object.keys(req.body)     
 
     // Check If All The Required Data Is Passed
     let isDataValid = signupPattern.every((key) => {return inputKeys.includes(key) && req.body[key]})

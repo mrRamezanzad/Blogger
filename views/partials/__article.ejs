@@ -1,8 +1,11 @@
 
-<div class="col-12 col-md-9 col-lg-8 container text-end">
-    <h3><%= article.title %> </h3>
-    <img src="/images/articles/<%= article.picture %> " alt="article picture">
+<div id="article" class="col-12 col-md-9 col-lg-8 container text-end shadow my-3 px-4">
+    <h3 class="text-center p-2"><%= article.title %> </h3>
+    <img class="mb-3" src="/images/articles/<%= article.picture %> " alt="article picture">
     <p><%- article.content %> </p>
-    <p> article.date</p>
-    <button class="btn btn-warning">تغییر</button><button class="btn btn-danger">حذف</button>
+    <p> <span class="ms-3">نگارنده:</span><span><%= article.author.firstName %> </span></p>
+    <p> <span class="ms-3">تاریخ نگارش:</span><span><%- article.createdAt.toLocaleString() %> </span></p>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-warning m-2">تغییر</button><button class="btn btn-danger m-2">حذف</button>
+    </div>
 </div>

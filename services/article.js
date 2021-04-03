@@ -30,9 +30,9 @@ exports.read = async (articleId, callback) => {
     }
     
     try {
-        let article = await Article.findById({_id: articleId})
+        let article = await Article.findById({_id: articleId}).populate('author').exec()
         callback(null, article)
-
+        
     } catch (err) {
         callback("مشکلی در پیدا کردن مفاله وجود دارد", null)
     } 
@@ -48,9 +48,9 @@ exports.readAll = async (match, callback) => {
             })
         })
     }
-
+    
     try {
-        let articles = await Article.find(match)
+        let articles = await Article.find(match).populate('author').exec()
         callback(null, articles)
 
     } catch (err) {

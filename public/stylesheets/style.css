@@ -121,4 +121,12 @@ aside ul li a {
   text-align: right;
 }
 
+#article {
+  overflow: hedden;
+}
+#article img {
+  display: block;
+  width: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */
