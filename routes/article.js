@@ -51,7 +51,7 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         let articles = await Article.readAll({})
-        res.render('article--list', {err: req.flash('error'), msg: req.flash('message'), articles})
+        res.render('article--list', {title:"لیست مقالات", err: req.flash('error'), msg: req.flash('message'), articles})
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")

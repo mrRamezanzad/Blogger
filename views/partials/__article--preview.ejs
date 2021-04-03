@@ -1,0 +1,17 @@
+
+<div id="article" class="article--preview col-12 col-md-9 col-lg-8 container shadow my-3 px-4 py-4 d-flex flex-row">
+    <div class="article__box-right border border-2 col-3">
+        <img class="" src="/images/articles/<%= article.picture %> " alt="article picture">
+    </div>
+    <div class="article__box-center col-8 px-3 text-center">
+        <h3 class="text-center p-2"><%= article.title %> </h3>
+        <p><%- article.content.substring(0,200) %> ... </p>
+        <p> <span class="ms-3">نگارنده:</span><span><%= article.author.firstName %> </span></p>
+        <p> <span class="ms-3">تاریخ نگارش:</span><span><%- article.createdAt.toLocaleString() %> </span></p>
+    </div>
+    <div class="article__box-left col-1 d-flex flex-column justify-content-center">
+            <a class="btn btn-primary m-2" href="/articles/<%= article._id %> ">بیشتر</a>
+            <button class="btn btn-warning m-2">تغییر</button>
+            <button class="btn btn-danger m-2">حذف</button>
+    </div>
+</div>

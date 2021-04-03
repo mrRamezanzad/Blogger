@@ -118,7 +118,7 @@ router.post('/avatar', async (req, res) => {
 router.get('/:id/articles', async (req, res) => {
     try {
         let articles = await User.getUserArticles(req.session.user._id)
-        res.render('article--list', {err: req.flash('error'), msg: req.flash('message'), articles})
+        res.render('article--list', {title: "مقالات من", err: req.flash('error'), msg: req.flash('message'), articles})
 
     } catch (err) {
         req.flash('error', "مشکلی در یافتن مقالات کابر وجود دارد")

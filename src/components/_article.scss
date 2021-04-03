@@ -1,7 +1,21 @@
 #article{
-    overflow: hedden;
+    overflow: hidden;
     img{
         display: block;
         width: 100%;
+    }
+}
+
+.article--preview{
+    height: 270px !important;
+
+    img{
+        display: block;
+        object-fit: fit;
+        height: 100%;
+    }
+
+    .article__box-left .btn{
+        width: 5rem !important;
     }
 }

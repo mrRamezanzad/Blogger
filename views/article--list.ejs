@@ -1,4 +1,4 @@
-<%- include("./partials/__header--start", {title: "Edit Profile"}) %>
+<%- include("./partials/__header--start", {title}) %>
 <%- include("./partials/__header--end") %>
 
 <!-- Custom Styles -->
@@ -7,7 +7,6 @@
 <%- include("./partials/__header--end") %>
 <%- include("./partials/__navbar", {page: "dashboard"}) %> 
 <%- include("./partials/__alert", {msg, err}) %> 
-
 
 <div class="container-fluid">
     <div class="row">
@@ -18,7 +17,7 @@
 
         <!-- Rendering Articles -->
         <% articles.forEach(article => { %>
-            <%- include('./partials/__article', {article})  %> 
+            <%- include('./partials/__article--preview', {article, preview: true})  %> 
         <% }) %>    
     </div>
 </div>

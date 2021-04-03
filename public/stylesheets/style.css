@@ -122,11 +122,23 @@ aside ul li a {
 }
 
 #article {
-  overflow: hedden;
+  overflow: hidden;
 }
 #article img {
   display: block;
   width: 100%;
+}
+
+.article--preview {
+  height: 270px !important;
+}
+.article--preview img {
+  display: block;
+  object-fit: fit;
+  height: 100%;
+}
+.article--preview .article__box-left .btn {
+  width: 5rem !important;
 }
 
 /*# sourceMappingURL=style.css.map */
