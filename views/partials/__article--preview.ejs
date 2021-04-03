@@ -5,7 +5,7 @@
     </div>
     <div class="article__box-center col-8 px-3 text-center">
         <h3 class="text-center p-2"><%= article.title %> </h3>
-        <p><%- article.content.substring(0,200) %> ... </p>
+        <p><%- article.content.replace(/<img .*>.*/gi, "").substring(0,200) %> ... </p>
         <p> <span class="ms-3">نگارنده:</span><span><%= article.author.firstName %> </span></p>
         <p> <span class="ms-3">تاریخ نگارش:</span><span><%- article.createdAt.toLocaleString() %> </span></p>
     </div>
