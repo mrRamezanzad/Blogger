@@ -3,35 +3,35 @@ const express = require('express'),
       User    = require('../services/user')
       
 const {isAuthorized, checkLogin} = require('../services/authorization')
-// TODO: Refactor The Repeating Flash Messages In Rendering
+
 // ============================ Home ============================
 router.get('/', function(req, res, next) {
-  res.render('index', {msg: req.flash('message'), err: req.flash('error')});
+  res.render('index');
 });
 
 // ============================ Register ============================
 router.get('/register/', checkLogin, (req, res) => {
-  res.render('register', {msg: req.flash('message'), err: req.flash('error')})
+  res.render('register')
 })
 
 // ============================ Login ============================
 router.get('/login/', checkLogin, (req, res) => {
-  res.render('login', {msg: req.flash('message'), err: req.flash('error')})
+  res.render('login')
 })
 
 // ============================ Dashboard ============================
 router.get('/dashboard/', isAuthorized, async (req, res) => {
-  res.render('dashboard--profile', {msg: req.flash('message'), err: req.flash('error')})
+  res.render('dashboard--profile')
 })
 
 // ============================ Dashboard Edit ============================
 router.get('/dashboard/edit/', isAuthorized, async (req, res) => {
-  res.render('dashboard--edit', {msg: req.flash('message'), err: req.flash('error')})
+  res.render('dashboard--edit')
 })
 
 // ============================ New Article ============================
 router.get('/new', isAuthorized, (req, res) => {
-  res.render('article--create', {msg: req.flash('message'), err: req.flash('error')})
+  res.render('article--create')
 })
 
 module.exports = router;

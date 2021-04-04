@@ -49,6 +49,12 @@ app.use((req, res, next) => {
   next()
 })
 
+// Setup Flash Messages For View Rendering
+app.use((req, res, next) => {
+  res.locals.flash = req.flash()
+  next()
+})
+
 // Set Up Controllers To Handle Routes
 app.use('/', api)
 

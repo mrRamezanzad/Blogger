@@ -1,14 +1,14 @@
 <div class=" alert-box w-100 position-absolute">
-    <% if (msg.length) { %>
+    <% if (flash.message) { %>
         <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
-            <%= msg %>
+            <%= flash.message %>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>
 
-    <% if (err.length) { %>
+    <% if (flash.error) { %>
         <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
-            <%= err %>
+            <%= flash.error %>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <% } %>

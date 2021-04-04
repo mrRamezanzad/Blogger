@@ -1,7 +1,7 @@
 <%- include("./partials/__header--start", {title: "Login"}) %>
 <%- include("./partials/__header--end") %>
 <%- include("./partials/__navbar", {page: "login"}) %> 
-<%- include("./partials/__alert", {msg, err}) %>
+<%- include("./partials/__alert", {flash: locals.flash}) %>
 
 <div class="container pt-5">
   
