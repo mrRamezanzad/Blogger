@@ -18,7 +18,7 @@ $("#new-article").on("submit", function (e) {
   $("#article-content").val($(".ql-editor").not('.ql-blank').html())
   if(!checkArticleContent()) return 
 
-  if (checkArticleTitle() && checkArticleContent()) this.submit()
+  this.submit()
 
 })
 
@@ -38,8 +38,8 @@ function checkArticleTitle () {
 
 // Check If Article Content Is Empty
 function checkArticleContent () {
-  let content = $("#article-content").val()
-  if (content.trim().length) return true
+  let isBlank = $(".ql-editor").hasClass("ql-blank")
+  if (!isBlank) return true
 
   $(".alert-box").append(`
       <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">

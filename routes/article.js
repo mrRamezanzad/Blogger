@@ -61,6 +61,39 @@ router.get('/', async (req, res) => {
     }
 })
 
+router. get('/edit/:id', async (req, res) => {
+    try {
+        let requestedArticleId = req.params.id,
+            article = await Article.read(requestedArticleId)
+
+        // TODO: Getting 404 Pages At End Of Project
+        if(!article) return res.status(404).redirect('/')
+        res.render('article--edit', {article})
+
+    } catch (err) {
+        res.status(500).redirect('/')
+    }
+})
+
+router.put('/:id',articlePictureUploader.single('article-picture'), async (req, res) => {
+    try {
+        let articleId         = req.params.id,
+            editedArticleData = {
+                title       : req.body.title,
+                content     : req.body.content,
+                picture     : req.file.filename, 
+                lastUpdate  : Date.now()
+            }
+
+        // TODO: Remove last Picture After Updating Image
+        let isEdited = await Article.update(articleId, editedArticleData)
+        res.send("ویرایش با موفقیت انجام گرفت")
+
+    } catch (err) {
+        res.status(500).send("مشکلی در ویرایش مقاله وجود دارد")
+    }
+})
+
 router.delete('/:id', async (req, res) => {
     try {
         let articleId = req.params.id

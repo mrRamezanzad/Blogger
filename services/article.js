@@ -58,6 +58,25 @@ exports.readAll = async (match, callback) => {
     }
 }
 
+exports.update = async (articleId, editedArticleData, callback) => {
+    if (typeof callback !== "function" ) {
+        const func = this.update
+        return new Promise((resolve, reject) => {
+            func(articleId, editedArticleData, (err, result) => {
+                if (err) reject(err)
+                resolve(result)
+            })
+        })
+    }
+
+    try {
+        let editedArticle = await Article.updateOne({_id: articleId}, editedArticleData)
+        callback(null, editedArticle)
+
+    } catch (err) {
+        callback("مشکلی در آپدیت کردن وجود دارد", null)
+    }
+}
 exports.delete = async (articleId, callback) => {
     if (typeof callback !== "function") {
         const func = this.delete
