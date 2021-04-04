@@ -57,3 +57,23 @@ exports.readAll = async (match, callback) => {
         callback("مشکلی در حین پیدا کردن مقالات بوجود آمده است", null)
     }
 }
+
+exports.delete = async (articleId, callback) => {
+    if (typeof callback !== "function") {
+        const func = this.delete
+        return new Promise((resolve, reject) => {
+            func(articleId, (err, result) => {
+                if (err) reject(err)
+                resolve(result)
+            })
+        })
+    }
+
+    try {
+        await Article.deleteOne({_id: articleId})
+        callback(null, true)
+
+    } catch (err) {
+        callback("مشکلی در حذف مقاله بوجود آمده است", null)
+    }
+}

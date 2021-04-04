@@ -34,6 +34,8 @@ nav .nav-item .nav-link {
 }
 
 .alert {
+  position: fixed;
+  right: 25%;
   margin: 0 auto;
   width: 50%;
   z-index: 2000;
@@ -50,6 +52,7 @@ label:not(:first-of-type) {
 }
 
 .dashboard-menu-button {
+  width: 3rem;
   transition: all ease-in-out 0.2s;
   position: fixed;
   top: 60px;

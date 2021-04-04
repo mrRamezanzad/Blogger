@@ -41,21 +41,34 @@ router.get('/:id', async (req, res) => {
         let requestedArticleId = req.params.id,
             article = await Article.read(requestedArticleId)
 
-        res.render('article', {msg: req.flash('message'), err: req.flash('error'), article})
+        // TODO: Getting 404 Pages At End Of Project
+        if(!article) return res.status(404).redirect('/')
+        res.render('article', {article})
 
     } catch (err) {
-        res.status(500).render('article', {msg: req.flash('message'), err: req.flash('error'), article})
+        res.status(500).redirect('/')
     }
 })
 
 router.get('/', async (req, res) => {
     try {
         let articles = await Article.readAll({})
-        res.render('article--list', {title:"لیست مقالات", err: req.flash('error'), msg: req.flash('message'), articles})
+        res.render('article--list', {title:"لیست مقالات", articles})
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")
         res.status(500).redirect('/dashboard')
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        let articleId = req.params.id
+        await Article.delete(articleId)
+        res.send("مقاله مورد نظر با موفقیت حذف شد")
+
+    } catch (err) {
+        res.status(500).send("مشکلی در حذف مقاله مورد نظر وجود دارد")
     }
 })
 
