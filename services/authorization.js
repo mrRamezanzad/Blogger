@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'),
-      User     = require('../models/user')
+      User     = require('../models/user'),
       bcrypt   = require('bcrypt')
 
 module.exports = {logUserIn, logUserOut, checkLogin, isAuthorized}

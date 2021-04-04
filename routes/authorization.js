@@ -2,7 +2,17 @@ const express = require('express'),
       router  = express.Router()
 
 // Importing Services
-const {logUserIn, logUserOut} = require('../services/authorization')
+const {logUserIn, logUserOut, checkLogin} = require('../services/authorization')
+
+// ============================ Register ============================
+router.get('/register', checkLogin, (req, res) => {
+  res.render('register')
+})
+
+// ============================ Login ============================
+router.get('/login', checkLogin, (req, res) => {
+  res.render('login')
+})
 
 // ============================Logging User In============================
 router.post('/login', async (req, res) => {
@@ -26,6 +36,7 @@ router.post('/login', async (req, res) => {
       res.redirect('/login')
     }
   })
+  
   // ============================Logout User============================
   router.get('/logout', (req, res) => { logUserOut(req, res)} )
 
