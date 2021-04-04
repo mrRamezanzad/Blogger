@@ -6,6 +6,6 @@
     <p> <span class="ms-3">نگارنده:</span><span><%= article.author.firstName %> </span></p>
     <p> <span class="ms-3">تاریخ نگارش:</span><span><%- article.createdAt.toLocaleString() %> </span></p>
     <div class="d-flex justify-content-end">
-        <button class="btn btn-warning m-2">تغییر</button><button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
+        <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a><button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
     </div>
 </div>

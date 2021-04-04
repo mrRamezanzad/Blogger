@@ -14,8 +14,8 @@ const index         = require("./index"),
 
 router.use('/', [index, authorization, other])
 router.use('/dashboard', isAuthorized, dashboard)
-router.use('/users', isAuthorized, user)
-router.use('/articles', isAuthorized, article)
-router.use('/comments', isAuthorized, comment)
+router.use('/users',     isAuthorized, user)
+router.use('/articles',  isAuthorized, article)
+router.use('/comments',  isAuthorized, comment)
 
 module.exports = router;
