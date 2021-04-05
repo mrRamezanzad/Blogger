@@ -85,7 +85,8 @@ router.put('/:id',articlePictureUploader.single('article-picture'), async (req, 
                 lastUpdate  : Date.now()
             }
 
-        // TODO: Remove last Picture After Updating Image
+        // TODO: Remove Last Picture After Updating Image
+        // FIXME: Handle Updating Without Image
         let isEdited = await Article.update(articleId, editedArticleData)
         res.send("ویرایش با موفقیت انجام گرفت")
 

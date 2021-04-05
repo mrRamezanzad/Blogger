@@ -2,7 +2,8 @@
 <%- include("./partials/__header--end") %>
 <%- include("./partials/__navbar", {page: "home"}) %>
 <%- include("./partials/__alert", {flash: locals.flash}) %>
-<!-- TODO: add sidebar if user is logged in -->
+<% if (locals.user) {%> <%- include("./partials/__sidebar") %> <% } %>
+
 <div class="container py-5">
     <div class="row py-5">
         <div class="col-12 text-center mt-5">
@@ -11,5 +12,7 @@
         </div>
     </div>
 </div>
+
 <%- include("./partials/__scripts") %>
+<% if (locals.user) {%> <script src="/javascripts/sidebar.js"></script> <% } %>
 <%- include("./partials/__footer") %>

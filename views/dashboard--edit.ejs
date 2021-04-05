@@ -4,9 +4,14 @@
 <%- include("./partials/__alert", {flash: locals.flash}) %>
 
 <div class="container">
+    
     <h5 class="d-inline-block">مشخصات جدید را وارد کنید</h5>
     <button data-user-id="<%= locals.user._id %> " id="edit-user" class=" d-inline-block mt-2 btn btn-success me-3">ذخیره</button>
     <div class="row mt-3 gx-5 gy-3">
+
+        <!-- sidebar navigation -->
+        <%- include('./partials/__sidebar', {user: locals.user}) %>
+        
         <div class="col-6 col-md-4 col-xl-3">
             <label for="firstname">نام</label>
             <input type="text" name="firstname" class="form-control" value="<%= locals.user.firstName %>">
@@ -36,7 +41,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Importing Scripts -->
 <%- include("./partials/__scripts") %>

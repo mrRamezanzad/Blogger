@@ -14,10 +14,22 @@ $("#edit-article").on("submit", function (e) {
         contentType: false,
         processData: false,
         success: function (response) {
-            console.log("success ===>", response);
+            $(".alert-box").append(`
+                <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
+                    ${response}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `)
+            setTimeout(() => {location.replace(document.referrer)}, 1500)
+
         },
         error: function (err) {
-            console.log("error ===>", err);
+            $(".alert-box").append(`
+                <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+                    ${err.responseText}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            `)
         }
     });
 })   

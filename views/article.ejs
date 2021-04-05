@@ -11,7 +11,6 @@
 
 <div class="container-fluid">
     <div class="row">
-        <span class="dashboard-menu-button bi bi-columns" ></span>
         
         <!-- sidebar navigation -->
         <%- include('./partials/__sidebar', {user: locals.user}) %>
@@ -22,9 +21,6 @@
         
     </div>
 </div>
-
-<!-- Avatar Change Modal -->
-<%- include("./partials/__modal--avatar", {userId: user._id}) %>
 
 <!-- Import Scripts -->
 <%- include("./partials/__scripts") %>

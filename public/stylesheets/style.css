@@ -67,6 +67,7 @@ label:not(:first-of-type) {
 
 aside {
   top: 110px;
+  right: 0;
   padding: 2rem;
   border-block-start: 1rem solid #DF4C73;
   border-block-end: 1rem solid #DF4C73;
