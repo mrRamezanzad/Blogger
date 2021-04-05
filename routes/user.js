@@ -5,14 +5,15 @@ const express           = require('express'),
       User              = require('../services/user')
       
 const {removeOldAvatar, updateUserInSession} = require('../tools/general')
+const {isAuthorized, checkLogin} = require("../services/authorization")
       
 // ============================ Register The User ============================
-router.post('/', async (req, res) => {
-    let signupPattern   = ["username", "password"],
+router.post('/', checkLogin, async (req, res) => {
+    let signupPattern   = ["username", "password", "email"],
         inputKeys       = Object.keys(req.body)     
 
     // Check If All The Required Data Is Passed
-    let isDataValid = signupPattern.every((key) => {return inputKeys.includes(key) && req.body[key]})
+    let isDataValid = signupPattern.every((key) => {return inputKeys.includes(key)})
     
     if(!isDataValid) {
         req.flash('error', "مقادیر ورودی را چک کنید")
@@ -31,7 +32,7 @@ router.post('/', async (req, res) => {
 })
 
 // ============================ Edit User ============================
-router.put('/:id/', (req, res) => {
+router.put('/:id/', isAuthorized, (req, res) => {
     // Sanitize The Updated User Information
     let updatedUserInfo = {
         username    : req.body.username,
@@ -51,7 +52,7 @@ router.put('/:id/', (req, res) => {
 })
 
 // ============================ Change Password ============================
-router.patch('/', async (req, res) => {
+router.patch('/', isAuthorized, async (req, res) => {
     const userId          = req.session.user._id,
           currentPassword = req.body.currentPassword,
           newPassword     = req.body.newPassword
@@ -73,7 +74,7 @@ router.patch('/', async (req, res) => {
 })
 
 // ============================ Delete Account ============================
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAuthorized, async (req, res) => {
     const userId = req.params.id
     try{
         isDeleted = await User.delete(userId)
@@ -84,7 +85,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 // =========================== Upload Avatar =================================
-router.post('/avatar', async (req, res) => {
+router.post('/avatar', isAuthorized, async (req, res) => {
     const uploadAvatar = avatarUploader.single('avatar')
     uploadAvatar(req, res, function(err) {
         if (err instanceof multer.MulterError) return res.status(500).send('Server Error!')
@@ -115,7 +116,7 @@ router.post('/avatar', async (req, res) => {
     })
 })  
 
-router.get('/:id/articles', async (req, res) => {
+router.get('/:id/articles', isAuthorized, async (req, res) => {
     try {
         let articles = await User.getUserArticles(req.session.user._id)
         res.render('article--list', {title: "مقالات من", err: req.flash('error'), msg: req.flash('message'), articles})

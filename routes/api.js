@@ -13,8 +13,8 @@ const index         = require("./index"),
       other         = require("./other")
 
 router.use('/', [index, authorization, other])
+router.use('/users', user)
 router.use('/dashboard', isAuthorized, dashboard)
-router.use('/users',     isAuthorized, user)
 router.use('/articles',  isAuthorized, article)
 router.use('/comments',  isAuthorized, comment)
 
