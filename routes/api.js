@@ -11,7 +11,7 @@ const index         = require("./index"),
       article       = require("./article"),
       comment       = require("./comment"),
       other         = require("./other")
-
+// TODO: REFACTOR ACCESS CONTROLS
 router.use('/', [index, authorization, other])
 router.use('/users', user)
 router.use('/dashboard', isAuthorized, dashboard)
