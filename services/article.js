@@ -38,6 +38,7 @@ exports.read = async (articleId, callback) => {
     } 
 }
 
+// FIXME: MAKE PAGINATION 
 exports.readAll = async (match, callback) => {
     if (typeof callback !== "function") {
         const func = this.readAll

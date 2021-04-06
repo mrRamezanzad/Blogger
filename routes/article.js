@@ -18,6 +18,11 @@ router.post('/', (req, res) => {
         }
         
         try {
+            if (!req.file) {
+                req.flash('error', "مقاله جدید باید حتما شامل عکس باشد")
+                return res.status(400).redirect('/new')
+            }
+            
             let inputArticle = req.body,
                 newArticle   = await Article.create({
                     title    : inputArticle.title,
@@ -81,13 +86,11 @@ router.put('/:id',articlePictureUploader.single('article-picture'), async (req, 
             editedArticleData = {
                 title       : req.body.title,
                 content     : req.body.content,
-                picture     : req.file.filename, 
+                ... req.file && {picture: req.file.filename},
                 lastUpdate  : Date.now()
             }
 
-        // TODO: Remove Last Picture After Updating Image
-        // FIXME: Handle Updating Without Image
-        let isEdited = await Article.update(articleId, editedArticleData)
+        let {ok: isEdited} = await Article.update(articleId, editedArticleData)
         res.send("ویرایش با موفقیت انجام گرفت")
 
     } catch (err) {

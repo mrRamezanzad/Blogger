@@ -66,4 +66,5 @@ userSchema.pre("save", function (next) {
     })
 })
 
+// TODO: REMOVING RELATED ARTICLES OF A DELETED ACCOUNT
 module.exports = mongoose.model("User", userSchema)

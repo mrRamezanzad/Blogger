@@ -33,4 +33,5 @@ const articleSchema = new mongoose.Schema({
     }
 })
 
+// TODO: Remove Last Picture After Updating Article's Image
 module.exports = mongoose.model("Article", articleSchema)
