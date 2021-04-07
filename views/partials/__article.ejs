@@ -6,6 +6,7 @@
     <p> <span class="ms-3">تاریخ نگارش:</span><span><%- article.createdAt.toLocaleString() %> </span></p>
     <p> <span class="ms-3">آخرین ویرایش:</span><span><%- article.lastUpdate.toLocaleString() %> </span></p>
     <div class="d-flex justify-content-end">
+        <!-- FIXME: 1- Giving Correct Edition And Deletion Access To Users -->
         <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a><button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
     </div>
 </div>

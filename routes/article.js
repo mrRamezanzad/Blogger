@@ -4,7 +4,7 @@ const express                   = require('express'),
       multer                    = require('multer')
 
 const {articlePictureUploader}  = require('../tools/uploader')
-
+//TODO: Seperate Images Inside Article And Upload It
 router.post('/', (req, res) => {
     const uploadArticlePicture = articlePictureUploader.single('article-picture')
     uploadArticlePicture(req, res, async (err) => {
