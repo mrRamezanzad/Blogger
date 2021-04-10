@@ -51,7 +51,7 @@ exports.readAll = async (match, callback) => {
     }
     
     try {
-        let articles = await Article.find(match).populate('author').limit(1).skip(0).sort({createdAt: -1}).exec()
+        let articles = await Article.find(match).populate('author').limit(100).skip(0).sort({createdAt: -1}).exec()
         callback(null, articles)
 
     } catch (err) {

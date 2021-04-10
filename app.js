@@ -8,9 +8,6 @@ const cookieParser  = require('cookie-parser'),
       logger        = require('morgan'),
       flash         = require('connect-flash')
 
-// Importing Contorller
-const api   = require('./routes/api')
-
 // Connect To DataBase And Show Proper Messages
 const db = dbConnector("localhost:27017", "final-project")
 
@@ -55,8 +52,8 @@ app.use((req, res, next) => {
   next()
 })
 
-// Set Up Controllers To Handle Routes
-app.use('/', api)
+// Setup Routes
+require('./routes')(app)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
