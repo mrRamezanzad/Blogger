@@ -115,8 +115,8 @@ router.post('/avatar', isAuthorized, async (req, res) => {
         }
     })
 })  
-
-router.get('/:id/articles', isAuthorized, async (req, res) => {
+// FIXME: Change view For Edit Article And Make It Without Id
+router.get('/articles', isAuthorized, async (req, res) => {
     try {
         let articles = await User.getUserArticles(req.session.user._id)
         res.render('article--list', {title: "مقالات من", err: req.flash('error'), msg: req.flash('message'), articles})

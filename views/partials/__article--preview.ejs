@@ -13,7 +13,9 @@
     </div>
     <div class="article__box-left col-1 d-flex flex-column justify-content-center">
             <a class="btn btn-primary m-2" href="/articles/<%= article._id %>">بیشتر</a>
-            <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a>
-            <button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
+            <% if (locals.user._id === String(article.author._id) || locals.user.role === "admin") { %>
+                <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a>
+                <button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
+            <% } %>
     </div>
 </div>

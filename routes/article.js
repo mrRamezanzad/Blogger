@@ -45,7 +45,7 @@ router.get('/:id', async (req, res) => {
     try {
         let requestedArticleId = req.params.id,
             article = await Article.read(requestedArticleId)
-
+        // TODO: Add Viewers Counting
         // TODO: Getting 404 Pages At End Of Project
         if(!article) return res.status(404).redirect('/')
         res.render('article', {article})
@@ -57,6 +57,7 @@ router.get('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
+        let page = req.params.page ?? 1, skip = req.params.skip ?? 2
         let articles = await Article.readAll({})
         res.render('article--list', {title:"لیست مقالات", articles})
 
