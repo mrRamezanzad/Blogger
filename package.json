@@ -5,6 +5,7 @@
   "author": "mrRamezanzad",
   "scripts": {
     "start": "node ./bin/www",
+    "dev": "nodemon --ignore public",
     "css": "sass --watch ./src/:./public/stylesheets/"
   },
   "dependencies": {

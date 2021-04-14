@@ -140,7 +140,7 @@ exports.changeAvatar = async (userId, filename, callback) => {
         if (err) return callback("مشکلی در اضافه کردن عکس پروفایل شما وجود دارد", false)
     }
 }
-
+// TODO: fix wrong placed services and move them to proper places in this case into article services
 exports.getUserArticles = async (userId, callback) => {
     if (typeof callback !== "function") {
         const func = this.getUserArticles
