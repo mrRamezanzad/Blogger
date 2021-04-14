@@ -108,7 +108,7 @@ $("[data-change-password]").on("click", function (e) {
 function sendPasswordChangeRequest (updatePasswordInformation) {
     $.ajax({
         type: "PATCH",
-        url: "/users/",
+        url: `/users`,
         data: updatePasswordInformation,
         success: function (response) {
             console.log("Success >>>", response)

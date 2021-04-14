@@ -2,18 +2,14 @@ const router = require('express').Router(),
       multer = require('multer')
 
 const User = require('../services/user')
-const {checkLogin, isAuthorized} = require("../services/authorization")
 
 const {avatarUploader} = require('../tools/uploader')
 const {updateUserInSession, removeOldAvatar} = require('../tools/general')
+const {notLoggedIn, isLoggedIn} = require('../services/authorization')
+const {comparePassword, logUserIn} = require('../services/authentication')
 
-// ============================ Register Render ============================
-router.get('/register', checkLogin, (req, res) => {
-    res.render('register')
-  })
-  
 // ============================ Register Controller ============================
-router.post('/users', checkLogin, async (req, res) => {
+router.post('/users', notLoggedIn, async (req, res) => {
     let signupPattern   = ["username", "password", "email"],
         inputKeys       = Object.keys(req.body)     
 
@@ -32,12 +28,12 @@ router.post('/users', checkLogin, async (req, res) => {
         
     } catch (err) {
         req.flash('error', "مشکلی در ثبت نام شما وجود دارد")
-        res.status(500).redirect('/register/')
+        res.status(500).redirect('/register')
     }
 })
 
 // ============================ Edit Controller ============================
-router.put('/users/:id/', isAuthorized, (req, res) => {
+router.put('/users/:id/', isLoggedIn, (req, res) => {
     // Sanitize The Updated User Information
     let updatedUserInfo = {
         username    : req.body.username,
@@ -57,13 +53,13 @@ router.put('/users/:id/', isAuthorized, (req, res) => {
 })
 
 // ============================ Change Password Controller ============================
-router.patch('/users', isAuthorized, async (req, res) => {
+router.patch('/users', isLoggedIn, async (req, res) => {
     const userId          = req.session.user._id,
           currentPassword = req.body.currentPassword,
           newPassword     = req.body.newPassword
             
     try {
-        let isMatch = await User.comparePassword(userId, currentPassword)
+        let isMatch = await logUserIn({_id: userId, password: currentPassword })
         if (!isMatch) return res.status(401).send("پسورد وارد شده معتبر نمی باشد")
 
         let isChanged = await User.updatePassword(userId, newPassword)
@@ -79,10 +75,10 @@ router.patch('/users', isAuthorized, async (req, res) => {
 })
 
 // ============================ Delete Account Controller============================
-router.delete('/users/:id', isAuthorized, async (req, res) => {
+router.delete('/users/:id', isLoggedIn, async (req, res) => {
     const userId = req.params.id
     try{
-        isDeleted = await User.delete(userId)
+        let isDeleted = await User.delete(userId)
         res.clearCookie('sid')
         res.status(200).send("به امید دیدار")
     }
@@ -90,7 +86,7 @@ router.delete('/users/:id', isAuthorized, async (req, res) => {
 })
 
 // =========================== Upload Avatar Controller =================================
-router.post('/users/avatar', isAuthorized, async (req, res) => {
+router.post('/users/avatar', isLoggedIn, async (req, res) => {
     const uploadAvatar = avatarUploader.single('avatar')
     uploadAvatar(req, res, function(err) {
         if (err instanceof multer.MulterError) return res.status(500).send('Server Error!')

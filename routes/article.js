@@ -4,11 +4,8 @@ const router  = require('express').Router(),
 const Article = require('../services/article')
 const {articlePictureUploader}  = require('../tools/uploader')
 
-// Importing Authorization Services
-const {isAuthorized} = require('../services/authorization')
-
 // ============================ New Article ============================
-router.get('/new', isAuthorized, (req, res) => {
+router.get('/new', (req, res) => {
     res.render('article--create')
   })
   
@@ -118,7 +115,7 @@ router.delete('/articles/:id', async (req, res) => {
     }
 })
 
-router.get('/articles/users/:id', isAuthorized, async (req, res) => {
+router.get('/articles/users/:id', async (req, res) => {
     try {
         let articles = await Article.readAll({author: req.params.id})
         res.render('article--list', {title: "مقالات من", articles})

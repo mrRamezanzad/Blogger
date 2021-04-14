@@ -50,7 +50,7 @@
                     <button class="mt-2 btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#password-confirmation-modal">
                         تغییر رمز عبور
                     </button>
-                    <a class="mt-2 btn btn-danger" role="delete-user" data-user-id="<%= user._id %>">حذف اکانت</a>
+                    <a class="mt-2 btn btn-danger" role="delete-user" data-user-id="<%= locals.user._id %>">حذف اکانت</a>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
 </div>
 
 <!-- Importing Password Change Confirmation modal -->
-<%- include("./partials/__modal--password", {userId: user._id}) %>
+<%- include("./partials/__modal--password", {user: locals.user}) %>
 
 <!-- Import Scripts -->
 <%- include("./partials/__scripts") %>

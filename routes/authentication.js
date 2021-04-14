@@ -1,18 +1,24 @@
 const router = require('express').Router()
 
-const {logUserIn, logUserOut} = require("../services/authorization")
+const {logUserIn, logUserOut}   = require("../services/authentication")
+const {isLoggedIn, notLoggedIn} = require("../services/authorization")
 
+// ============================ Register ============================
+router.get('/register',notLoggedIn, (req, res) => {
+    res.render('register')
+})
+  
 // ============================ Login ============================
-router.get('/login', (req, res) => {
+router.get('/login',notLoggedIn, (req, res) => {
     res.render('login')
   })
   
 // ============================Logging User In============================
-router.post('/login', async (req, res) => {
+router.post('/login',notLoggedIn, async (req, res) => {
     let loginPattern = ["username", "password"],
         inputKeys    = Object.keys(req.body),
         isDataValid  = loginPattern.every( input => inputKeys.includes(input) && req.body[input].trim() !== "" )
-
+// FIXME: returning correct message on view alert instead of obj obj
     if(!isDataValid) {
         req.flash('error', "لطفا فرم ورود را کامل پر کنید")
         return res.redirect('/login')
@@ -31,6 +37,6 @@ router.post('/login', async (req, res) => {
 })
 
 // ============================Logout User============================
-router.get('/logout', (req, res) => {logUserOut(req, res)} )
+router.get('/logout', isLoggedIn, logUserOut)
 
 module.exports = router
