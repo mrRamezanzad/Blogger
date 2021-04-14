@@ -6,7 +6,7 @@ exports.logUserIn = async  (userInfo) => {
         let user = await User.read({username: userInfo.username})
         if(!user) throw "کاربری با این مشخصات وجود ندارد"
 
-        let isMatch = await comparePassword(userInfo.password, user.password)
+        let isMatch = await this.comparePassword(userInfo.password, user.password)
         if(!isMatch) throw "لطفاً رمز ورودی خود را چک کنید"
         return user
 
@@ -18,7 +18,7 @@ exports.logUserOut = (req, res) =>  {
     res.redirect('/login')
 }
 
-async function comparePassword (enteredPassword, password) {
+exports.comparePassword = async (enteredPassword, password) => {
     try {return await bcrypt.compare(enteredPassword, password)}
     catch (err) {throw err}
 }

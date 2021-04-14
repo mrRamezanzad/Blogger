@@ -23,7 +23,7 @@ deleteUserButton.on("click", function (e) {
         error: function (err) {
             $(".alert-box").append(`
                 <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
-                    ${err}
+                    ${err.responseText}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>`
             )

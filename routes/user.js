@@ -4,9 +4,9 @@ const router = require('express').Router(),
 const User = require('../services/user')
 
 const {avatarUploader} = require('../tools/uploader')
-const {updateUserInSession, removeOldAvatar} = require('../tools/general')
+const {comparePassword} = require('../services/authentication')
 const {notLoggedIn, isLoggedIn} = require('../services/authorization')
-const {comparePassword, logUserIn} = require('../services/authentication')
+const {updateUserInSession, removeOldAvatar} = require('../tools/general')
 
 // ============================ Register Controller ============================
 router.post('/users', notLoggedIn, async (req, res) => {
@@ -27,7 +27,7 @@ router.post('/users', notLoggedIn, async (req, res) => {
         res.redirect('/login/')
         
     } catch (err) {
-        req.flash('error', "مشکلی در ثبت نام شما وجود دارد")
+        req.flash('error', "مشکلی در ساخت اکانت شما وجود دارد")
         res.status(500).redirect('/register')
     }
 })
@@ -54,12 +54,13 @@ router.put('/users/:id/', isLoggedIn, (req, res) => {
 
 // ============================ Change Password Controller ============================
 router.patch('/users', isLoggedIn, async (req, res) => {
-    const userId          = req.session.user._id,
-          currentPassword = req.body.currentPassword,
+    const userId          = req.session.user._id
+          oldPassword     = req.session.user.password,
+          enteredPassword = req.body.currentPassword,
           newPassword     = req.body.newPassword
             
     try {
-        let isMatch = await logUserIn({_id: userId, password: currentPassword })
+        let isMatch = await comparePassword(enteredPassword, oldPassword)
         if (!isMatch) return res.status(401).send("پسورد وارد شده معتبر نمی باشد")
 
         let isChanged = await User.updatePassword(userId, newPassword)

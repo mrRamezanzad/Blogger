@@ -1,59 +1,60 @@
 const mongoose = require('mongoose'),
       Article  = require('../models/article')
 
-exports.create = async (newArticleInfo, callback) => {
-    new Article(newArticleInfo).save((err, result) => {
-        if (err) return err
-        return result
-    } )
+exports.create = (newArticleInfo) => {
+    return new Promise((resolve, reject) => {
+        new Article(newArticleInfo).save((err, result) => {
+            if (err) reject(err)
+            resolve(result)
+        })
+    })
 }
 
-exports.read = async (articleId, callback) => {
-    try {
-        let article = await Article.findById({_id: articleId}).populate('author').exec()
-        return article
-        
-    } catch (err) {
-        return "مشکلی در پیدا کردن مفاله وجود دارد"
-    } 
+exports.read = (articleId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let article = await Article.findById({_id: articleId}).populate('author').exec()
+            resolve(article)
+            
+        } catch (err) {
+            reject("مشکلی در پیدا کردن مفاله وجود دارد")
+        } 
+    })
 }
 
 // FIXME: 3- MAKE PAGINATION 
-exports.readAll = async (match, callback) => {
-    try {
-        let articles = await Article.find(match).populate('author').limit(100).skip(0).sort({createdAt: -1}).exec()
-        return articles
+exports.readAll = (match) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let articles = await Article.find(match).populate('author').limit(100).skip(0).sort({createdAt: -1}).exec()
+            resolve(articles)
 
-    } catch (err) {
-        return "مشکلی در حین پیدا کردن مقالات بوجود آمده است"
-    }
+        } catch (err) {
+            reject("مشکلی در حین پیدا کردن مقالات بوجود آمده است")
+        }
+    })
 }
 
-exports.update = async (articleId, editedArticleData, callback) => {
-    if (typeof callback !== "function" ) {
-        const func = this.update
-        return new Promise((resolve, reject) => {
-            func(articleId, editedArticleData, (err, result) => {
-                if (err) reject(err)
-                resolve(result)
-            })
-        })
-    }
+exports.update = (articleId, editedArticleData) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let editedArticle = await Article.updateOne({_id: articleId}, editedArticleData)
+            resolve(editedArticle)
 
-    try {
-        let editedArticle = await Article.updateOne({_id: articleId}, editedArticleData)
-        return editedArticle
-
-    } catch (err) {
-        return "مشکلی در آپدیت کردن وجود دارد"
-    }
+        } catch (err) {
+            reject("مشکلی در آپدیت کردن وجود دارد")
+        }
+    })
 }
-exports.delete = async (articleId, callback) => {
-    try {
-        await Article.deleteOne({_id: articleId})
-        return true
 
-    } catch (err) {
-        return "مشکلی در حذف مقاله بوجود آمده است"
-    }
+exports.delete = (articleId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await Article.deleteOne({_id: articleId})
+            resolve(true)
+
+        } catch (err) {
+            reject("مشکلی در حذف مقاله بوجود آمده است")
+        }
+    })
 }
