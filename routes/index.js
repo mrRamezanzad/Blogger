@@ -1,21 +1,19 @@
-const {isAuthorized}    = require('../services/authorization')
+const {isAuthorized, checkLogin}    = require('../services/authorization')
 
 module.exports = (app) => {
 
     // importing All Routes to seperate them
-    const authorization = require('./authorizations'),
-          home          = require('./home')
+    const authorization = require('./authorization'),
           dashboard     = require('./dashboard'),
-          user          = require("./users"),
-          article       = require("./articles"),
-          comment       = require("./comments")
+          landing       = require('./landing')
+          article       = require("./article"),
+          user          = require("./user"),
 
     // TODO: REFACTOR ACCESS CONTROLS
-    app.use('/', home)
-    app.use('/', authorization)
-    app.use('/', user)
-    app.use('/', isAuthorized, dashboard)
+    app.use('/dashboard', isAuthorized, dashboard)
+    app.use('/', checkLogin, authorization)
     app.use('/', isAuthorized, article)
-    app.use('/', isAuthorized, comment)
+    app.use('/', isAuthorized, user)
+    app.use('/', landing)
     
 }
