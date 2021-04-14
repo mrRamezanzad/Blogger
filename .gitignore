@@ -1,4 +1,5 @@
 .vscode/
+nodemon.json
 node_modules/
 stylesheets/style.css.map
 avatars/

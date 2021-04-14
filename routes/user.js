@@ -6,7 +6,7 @@ const User = require('../services/user')
 const {avatarUploader} = require('../tools/uploader')
 const {comparePassword} = require('../services/authentication')
 const {notLoggedIn, isLoggedIn} = require('../services/authorization')
-const {updateUserInSession, removeOldAvatar} = require('../tools/general')
+const {updateUserInSession, removeOldFile} = require('../tools/general')
 
 // ============================ Register Controller ============================
 router.post('/users', notLoggedIn, async (req, res) => {
@@ -102,9 +102,9 @@ router.post('/users/avatar', isLoggedIn, async (req, res) => {
             }
 
             // If User Had Another Avatar Then Remove It
-            let isOldAvatarRemoved
+            let isOldFileRemoved
             (async () => {
-                isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
+                isOldFileRemoved = await removeOldFile(req.session.user.avatar)
             })()
             
             req.session.user.avatar = req.file.filename

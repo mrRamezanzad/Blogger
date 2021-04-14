@@ -1,30 +1,21 @@
 const fs        = require('fs'),
       path      = require('path')
 
-exports.removeOldAvatar = async (filename, callback) => {
-    if (typeof callback !== "function") {
-        const func = this.removeOldAvatar
-        return new Promise((resolve, reject) => {
-           func(filename, (err, result) => {
-               if (err) return reject(err)
-               resolve(result)
-           })
-        })
-    }
-    
-    if (filename.length) {
-        try {
-            let avatarExists = fs.existsSync(path.join(__dirname, "../public/images/avatars", filename))
-            if (!avatarExists) return callback(null, true)
-            
-            fs.unlinkSync(path.join(__dirname, "../public/images/avatars", filename))
-            return callback(null, true)
-
-        } catch (err) {
-            return callback("مشکلی در پاک کردن عکس پروفایل قدیمی وجود دارد", false)
+exports.removeOldFile = async (filename, callback) => {
+    return new Promise(async(resolve, reject) => {
+        if (filename.length) {
+            try {
+                let avatarExists = fs.existsSync(path.join(__dirname, "../public/images/avatars", filename))
+                if (!avatarExists) return resolve(true)
+                
+                fs.unlinkSync(path.join(__dirname, "../public/images/avatars", filename))
+                resolve(true)
+                
+            } catch (err) {
+              reject(false)
+            }
         }
-    }
-    return callback(null, true)
+    })  
 
 }
 
