@@ -1,4 +1,4 @@
-<div dir="ltr" class="card col-11 col-md-8  mb-2 px-3 py-2 position-relative">
+<div id="user-card" dir="ltr" class="card col-11 col-md-8  mb-2 px-3 py-3 pt-xl-3 position-relative">
 
     <% if(user.role === "admin") { %> 
         <!-- admin mark -->
@@ -20,33 +20,33 @@
         </div>
 
         <!-- section  -->
-        <div class="col-6 col-md-3 ">
+        <div class="col-6 col-md-3" dir="rtl">
             <!-- full name -->
-            <p class="fw-bold text-center"><%= user.firstName + " " + user.lastName %> </p>
+            <p class="text-center fw-bold"><%= user.firstName + " " + user.lastName %> </p>
 
             <!-- username -->
-            <p class="text-muted text-center">نام کاربری: 
-                <%= user.username %> 
-            </p>
+            <p class="text-center"><strong>نام کاربری : </strong><%= user.username %></p>
+            <p class="text-center"><strong>جنسیت : </strong><%= user.gender === 'male'? 'مرد' : 'زن' %></p>
         </div>
 
         <!-- section  -->
-        <div class="col-6 col-md-3">
+        <div class="col-6 col-md-3" dir="rtl">
             <!-- gender -->
-            <p class="fw-bold text-center"><%= user.gender %> </p>
-
-            <!-- company -->
-            <p class="text-muted text-center">company: <%#= user.company.name %> </p>
+            <p class="text-center"><strong>نقش کاربر : </strong><%= user.role %> </p>
+            <p class="text-center"><strong>شماره تماس : </strong><%= user.mobile %> </p>
+            <p class="text-center"><strong>آخرین تغییر : </strong><%= user.lastUpdate.toLocaleString() %></p>
         </div>
 
         <!-- edit section  -->
         <div class="col-12 col-md-3 text-center">
 
             <!-- edit button -->
-            <icon card-id="<%= user._id %>" class="edit-user bi bi-journals p-2 fs-4 border-end"></icon>
+            <icon data-user-id="<%= user._id %>" class="card__user-articles bi bi-journals p-2 fs-4 border-end"></icon>
 
             <!-- delete button -->
-            <icon card-id="<%= user._id %>" class="delete-user bi bi-trash2 p-2 fs-4"></icon>
+            <icon data-user-id="<%= user._id %>" class="card__reset-password bi bi-key p-2 fs-4 border-end"></icon>
+            <!-- delete button -->
+            <icon data-user-id="<%= user._id %>" class="card__delete-user bi bi-trash2 p-2 fs-4"></icon>
 
         </div>
     </div>

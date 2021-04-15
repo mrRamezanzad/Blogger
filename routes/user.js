@@ -1,12 +1,13 @@
 const router = require('express').Router(),
-      multer = require('multer')
+      multer = require('multer'),
+      mail   = require('nodemailer')
 
 const User = require('../services/user')
 
 const {avatarUploader} = require('../tools/uploader')
 const {comparePassword} = require('../services/authentication')
 const {notLoggedIn, isLoggedIn} = require('../services/authorization')
-const {updateUserInSession, removeOldFile} = require('../tools/general')
+const {updateUserInSession, removeOldFile, generateNewPassword} = require('../tools/general')
 
 // ============================ Register Controller ============================
 router.post('/users', notLoggedIn, async (req, res) => {
@@ -24,7 +25,7 @@ router.post('/users', notLoggedIn, async (req, res) => {
     try {
         await User.create(req.body)
         req.flash('message', "اکانت شما با موفقیت ساخته شد")
-        res.redirect('/login/')
+        res.status(201).redirect('/login')
         
     } catch (err) {
         req.flash('error', "مشکلی در ساخت اکانت شما وجود دارد")
@@ -80,8 +81,13 @@ router.delete('/users/:id', isLoggedIn, async (req, res) => {
     const userId = req.params.id
     try{
         let isDeleted = await User.delete(userId)
+
+        if(req.session.user.role === "admin") {
+            return res.status(204).json({msg:"sssss"})
+        }
         res.clearCookie('sid')
-        res.status(200).send("به امید دیدار")
+        res.status(204).send("به امید دیدار")
+        
     }
     catch (err) {return res.status(500).send("در این لحظه امکان حذف اکانت وجود ندارد")}
 })
@@ -118,4 +124,16 @@ router.post('/users/avatar', isLoggedIn, async (req, res) => {
     })
 })  
 
+router.get('/users/:id/resetpassword', async (req, res) => {
+   try {
+        let userId            = req.params.id,
+            newPassword       = generateNewPassword(),
+            isPasswordUpdated = await User.updatePassword(userId, newPassword)
+            console.log(newPassword);
+        if (isPasswordUpdated) {
+            return res.status(200).send("ایمیل حاوی رمز جدید برای کابر ارسال شد.")
+        }
+
+    } catch (err) {res.status(500).send("مشکلی در بازیابی رمز عبور وجود دارد.")}
+})
 module.exports = router

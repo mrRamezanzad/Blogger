@@ -28,3 +28,5 @@ exports.updateUserInSession = (userInSession, updatedUserInfo) => {
     userInSession.gender     = updatedUserInfo.gender
     userInSession.lastUpdate = updatedUserInfo.lastUpdate
 }
+
+exports.generateNewPassword = () => {return Math.random().toString(36).substr(2)}

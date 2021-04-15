@@ -1,3 +1,6 @@
+// #user-card{
+//     line-height: 1rem;
+// }
 .card {
     overflow: hidden;
 
@@ -21,13 +24,20 @@
     }
 
     &__user-articles,
-    &__delete-user {
+    &__delete-user, 
+    &__reset-password {
         cursor: pointer;
     }
 
     &__user-articles {
         &:hover {
-            color: orange;
+            color: slateblue;
+        }
+    }
+
+    &__reset-password {
+        &:hover {
+            color: greenyellow;
         }
     }
 
