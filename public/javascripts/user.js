@@ -16,7 +16,9 @@ $('.card__delete-user').on('click', function (e) {
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>`
             )
-            location.reload()
+
+            setTimeout(() => {location.reload()}, 1000)
+           
         },
         error: function (err) {
             $(".alert-box").append(`

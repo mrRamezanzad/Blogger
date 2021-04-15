@@ -8,7 +8,7 @@
     <div class="row align-items-center  ">
 
         <!-- avatar -->
-        <div class="col-12 col-md-3  d-flex d-md-block justify-content-center avatar">
+        <div class="col-12 col-md-1  d-flex d-md-block justify-content-center avatar">
             <img class="card__avatar ms-md-4  d-block rounded rounded-circle"
                 <% if (user.avatar) { %>
                     src="/images/avatars/<%= user.avatar %> "
@@ -20,7 +20,7 @@
         </div>
 
         <!-- section  -->
-        <div class="col-6 col-md-3" dir="rtl">
+        <div class="col-6 col-md-5" dir="rtl">
             <!-- full name -->
             <p class="text-center fw-bold"><%= user.firstName + " " + user.lastName %> </p>
 
@@ -30,23 +30,23 @@
         </div>
 
         <!-- section  -->
-        <div class="col-6 col-md-3" dir="rtl">
+        <div class="col-6 col-md-5" dir="rtl">
             <!-- gender -->
             <p class="text-center"><strong>نقش کاربر : </strong><%= user.role %> </p>
             <p class="text-center"><strong>شماره تماس : </strong><%= user.mobile %> </p>
-            <p class="text-center"><strong>آخرین تغییر : </strong><%= user.lastUpdate.toLocaleString() %></p>
+            <p class="text-center"><strong>ایمیل : </strong><%= user.email %></p>
         </div>
 
         <!-- edit section  -->
-        <div class="col-12 col-md-3 text-center">
+        <div class="col-12 col-md-1 text-center">
 
             <!-- user articles button -->
             <a href="/articles/users/<%= user._id %>">
-                <icon data-user-id="<%= user._id %>" class="card__user-articles bi bi-journals p-2 fs-4 border-end"></icon>
+                <icon data-user-id="<%= user._id %>" class="card__user-articles bi bi-journals p-2 fs-4"></icon>
             </a>
 
             <!-- reset user's password button -->
-            <icon data-user-id="<%= user._id %>" class="card__reset-password bi bi-key p-2 fs-4 border-end"></icon>
+            <icon data-user-id="<%= user._id %>" class="card__reset-password bi bi-key p-2 fs-4"></icon>
 
             <!-- delete user button -->
                 <icon data-user-id="<%= user._id %>" class="card__delete-user bi bi-trash2 p-2 fs-4"></icon>

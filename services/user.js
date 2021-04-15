@@ -5,6 +5,7 @@ exports.create  = (userInfo) => {
         new User({
             firstName : userInfo.firstName,
                 lastName  : userInfo.lastName,
+                email     : userInfo.email,
                 username  : userInfo.username,
                 password  : userInfo.password,
                 gender    : userInfo.gender,

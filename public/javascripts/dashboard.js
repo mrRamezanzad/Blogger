@@ -13,7 +13,7 @@ deleteUserButton.on("click", function (e) {
             console.log("Success>>>>>", response);
             $(".alert-box").append(`
                 <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
-                    ${response}
+                    اکانت شما با موفقیت حذف گردید.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>`
             )

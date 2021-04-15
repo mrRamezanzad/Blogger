@@ -7,7 +7,7 @@ const User = require('../services/user')
 const {avatarUploader} = require('../tools/uploader')
 const {comparePassword} = require('../services/authentication')
 const {notLoggedIn, isLoggedIn} = require('../services/authorization')
-const {updateUserInSession, removeOldFile, generateNewPassword} = require('../tools/general')
+const {updateUserInSession, removeOldFile, generateNewPassword, sendMail} = require('../tools/general')
 
 // ============================ Register Controller ============================
 router.post('/users', notLoggedIn, async (req, res) => {
@@ -38,6 +38,7 @@ router.put('/users/:id/', isLoggedIn, (req, res) => {
     // Sanitize The Updated User Information
     let updatedUserInfo = {
         username    : req.body.username,
+        email       : req.body.email,
         firstName   : req.body.firstName,
         lastName    : req.body.lastName,
         mobile      : req.body.mobile,
@@ -126,14 +127,33 @@ router.post('/users/avatar', isLoggedIn, async (req, res) => {
 
 router.get('/users/:id/resetpassword', async (req, res) => {
    try {
-        let userId            = req.params.id,
-            newPassword       = generateNewPassword(),
-            isPasswordUpdated = await User.updatePassword(userId, newPassword)
-            // email(`رمز عبور جدید شما: ${newPassword}`)
-            console.log(newPassword);
-        if (isPasswordUpdated) {
-            return res.status(200).send("ایمیل حاوی رمز جدید برای کابر ارسال شد.")
+        let userId = req.params.id
+        let newPassword = generateNewPassword()
+        let isPasswordUpdated = await User.updatePassword(userId, newPassword)
+
+        if (!isPasswordUpdated) {
+            return res.status(500).send("مشکلی در بروز رسانی رمز عبور وجود دارد.")
         }
+            
+        let {email} = await User.read({_id: userId})
+
+        sendMail(email, {
+            subject: "بازیابی رمز عبور",
+            content:`
+                <center dir="rtl">
+                    <h3 style="color:blue;">بازیابی رمز عبور</h3>
+                    <p>این رمز به درخواست شما تولید شده است، لطفا پس از 
+                        <a href="http://localhost/login" style="text-decoration: none;">
+                            ورود به محیط کاربری
+                        </a> 
+                        رمز عبور جدیدی تنظیم نمایید :
+                    </p>
+                    <p><span>رمز عبور : </span>${newPassword}</p>
+                </center>`
+        })
+            
+        console.log(newPassword);
+        return res.status(200).send("ایمیل حاوی رمز جدید برای کابر ارسال شد.")
 
     } catch (err) {res.status(500).send("مشکلی در بازیابی رمز عبور وجود دارد.")}
 })

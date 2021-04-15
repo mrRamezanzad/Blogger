@@ -10,13 +10,14 @@ async function initializer (){
         let admin = await user.findOne({role: "admin"})
         if (!admin) {
             admin = new user({
-                firstName       : "Shahin",
-                lastName        : "Barekat", 
-                username        : "admin", 
-                password        : "admin", 
-                gender          : "male",
-                mobile          : "09192345568",
-                role            : "admin"
+                firstName  : "Shahin",
+                lastName   : "Barekat", 
+                username   : "admin", 
+                email      : "mohammadrezaramezanzad@gmail.com",
+                password   : "admin", 
+                gender     : "male",
+                mobile     : "09192345568",
+                role       : "admin"
     
             }).save((err) => {
                 if (err) return console.log("[+] There was a Problem Creating Admin ====>", err);
