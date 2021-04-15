@@ -4,6 +4,11 @@
 .card {
     overflow: hidden;
 
+    a{
+        color: black;
+        text-decoration: none;
+    }
+
     &__admin-mark {
         width: 100px;
         text-align: center;

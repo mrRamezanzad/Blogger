@@ -148,6 +148,10 @@ aside ul li a {
 .card {
   overflow: hidden;
 }
+.card a {
+  color: black;
+  text-decoration: none;
+}
 .card__admin-mark {
   width: 100px;
   text-align: center;
