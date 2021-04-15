@@ -27,6 +27,16 @@ exports.read = (match) => {
     })
 }
 
+exports.readAll = (match = {}) => {
+    return new Promise(async(resolve, reject) => {
+        try {
+            let users = await User.find(match)
+            resolve(users)
+            
+        } catch (err) {reject("مشکلی در پیدا کردن اطلاعات کابری بوجود آمدهاست.")}
+    })
+}
+
 exports.update = (userId, updatedUserInfo) => {
     return new Promise(async(resolve, reject) => {
         try {

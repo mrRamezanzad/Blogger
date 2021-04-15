@@ -1,7 +1,7 @@
-<%- include("./partials/__header--start", {title: "Edit Profile"}) %>
-<%- include("./partials/__header--end") %>
-<%- include("./partials/__navbar", {page: "dashboard"}) %> 
-<%- include("./partials/__alert", {flash: locals.flash}) %>
+<%- include("../partials/__header--start", {title: "Edit Profile"}) %>
+<%- include("../partials/__header--end") %>
+<%- include("../partials/__navbar", {page: "dashboard"}) %> 
+<%- include("../partials/__alert", {flash: locals.flash}) %>
 
 <div class="container">
     
@@ -10,7 +10,7 @@
     <div class="row mt-3 gx-5 gy-3">
 
         <!-- sidebar navigation -->
-        <%- include('./partials/__sidebar', {user: locals.user}) %>
+        <%- include('../partials/__sidebar', {user: locals.user}) %>
         
         <div class="col-6 col-md-4 col-xl-3">
             <label for="firstname">نام</label>
@@ -43,6 +43,6 @@
 </div>
 
 <!-- Importing Scripts -->
-<%- include("./partials/__scripts") %>
+<%- include("../partials/__scripts") %>
 <script src="/javascripts/dashboard.js"></script>
 <script src="/javascripts/sidebar.js"></script>

@@ -6,7 +6,7 @@ const {articlePictureUploader}  = require('../tools/uploader')
 
 // ============================ New Article ============================
 router.get('/new', (req, res) => {
-    res.render('article--create')
+    res.render('article/create')
   })
   
 //TODO: Seperate Images Inside Article And Upload It
@@ -53,7 +53,7 @@ router.get('/articles/:id', async (req, res) => {
         // TODO: Add Viewers Counting
         // TODO: Getting 404 Pages At End Of Project
         if(!article) return res.status(404).redirect('/')
-        res.render('article', {article})
+        res.render('article/index', {article})
 
     } catch (err) {
         res.status(500).redirect('/')
@@ -64,7 +64,7 @@ router.get('/articles', async (req, res) => {
     try {
         let page = req.params.page ?? 1, skip = req.params.skip ?? 2
         let articles = await Article.readAll({})
-        res.render('article--list', {title:"لیست مقالات", articles})
+        res.render('article/list', {title:"لیست مقالات", articles})
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")
@@ -79,7 +79,7 @@ router. get('/articles/edit/:id', async (req, res) => {
 
         // TODO: Getting 404 Pages At End Of Project
         if(!article) return res.status(404).redirect('/')
-        res.render('article--edit', {article})
+        res.render('article/edit', {article})
 
     } catch (err) {
         res.status(500).redirect('/')
@@ -118,7 +118,7 @@ router.delete('/articles/:id', async (req, res) => {
 router.get('/articles/users/:id', async (req, res) => {
     try {
         let articles = await Article.readAll({author: req.params.id})
-        res.render('article--list', {title: "مقالات من", articles})
+        res.render('article/list', {title: "مقالات من", articles})
 
     } catch (err) {
         req.flash('error', "مشکلی در یافتن مقالات کابر وجود دارد")

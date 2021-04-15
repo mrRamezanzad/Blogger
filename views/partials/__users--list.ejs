@@ -1,0 +1,25 @@
+<div id="article" class="article--preview col-12 col-md-9 col-lg-8 container shadow my-3 px-4 py-4 d-flex flex-row">
+    <div class="article__box-right border border-2 col-3">
+        <img class="" src="/images/articles/<%= article.picture %> " alt="article picture">
+    </div>
+    <div class="article__box-center col-8 px-3 text-center">
+        <h3 class="text-center p-2"><%= article.title %> </h3>
+        <p><%- article.content.replace(/<img .*>.*/gi, "").substring(0,200) %> ... </p>
+        <p> <strong class="ms-3">نگارنده:</strong><span><%= article.author.firstName %> </span></p>
+        <p> 
+            <strong class="ms-3">تاریخ نگارش:</strong><span><%- article.createdAt.toLocaleString() %> </span>
+            <strong class="ms-3 me-5">آخرین ویرایش:</strong><span><%- article.lastUpdate.toLocaleString() %> </span>
+        </p>
+    </div>
+    <div class="article__box-left col-1 d-flex flex-column justify-content-center">
+            <a class="btn btn-primary m-2" href="/articles/<%= article._id %>">بیشتر</a>
+
+            <!-- Check If User Has Access For Edit And Delete -->
+            <% if (locals.user._id === String(article.author._id)) { %>
+                <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a>
+            <% } %>
+            <% if (locals.user._id === String(article.author._id) || locals.user.role === "admin") { %>
+                <button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
+            <% } %>
+    </div>
+</div>

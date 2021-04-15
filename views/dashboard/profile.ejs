@@ -1,14 +1,14 @@
-<%- include("./partials/__header--start", {title: "Edit Profile"}) %>
-<%- include("./partials/__header--end") %>
-<%- include("./partials/__navbar", {page: "dashboard"}) %> 
-<%- include("./partials/__alert", {flash: locals.flash}) %>
+<%- include("../partials/__header--start", {title: "Edit Profile"}) %>
+<%- include("../partials/__header--end") %>
+<%- include("../partials/__navbar", {page: "dashboard"}) %> 
+<%- include("../partials/__alert", {flash: locals.flash}) %>
 
 
 <div class="container-fluid">
     <div class="row">
         
         <!-- sidebar navigation -->
-        <%- include('./partials/__sidebar', {user: locals.user}) %>
+        <%- include('../partials/__sidebar', {user: locals.user}) %>
 
         <div class="col-10 container text-end">
             <h3>داشبورد</h3>
@@ -58,9 +58,9 @@
 </div>
 
 <!-- Importing Password Change Confirmation modal -->
-<%- include("./partials/__modal--password", {user: locals.user}) %>
+<%- include("../partials/__modal--password", {user: locals.user}) %>
 
 <!-- Import Scripts -->
-<%- include("./partials/__scripts") %>
+<%- include("../partials/__scripts") %>
 <script src="/javascripts/dashboard.js"></script>
 <script src="/javascripts/sidebar.js"></script>
