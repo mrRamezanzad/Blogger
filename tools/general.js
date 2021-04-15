@@ -30,3 +30,7 @@ exports.updateUserInSession = (userInSession, updatedUserInfo) => {
 }
 
 exports.generateNewPassword = () => {return Math.random().toString(36).substr(2)}
+
+// exports.mail = (emailContent) => {
+//     console.log(emailContent);
+// }

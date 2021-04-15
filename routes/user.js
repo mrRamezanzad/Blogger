@@ -1,6 +1,6 @@
 const router = require('express').Router(),
-      multer = require('multer'),
-      mail   = require('nodemailer')
+      multer = require('multer')
+    //   mail   = require('nodemailer')
 
 const User = require('../services/user')
 
@@ -129,6 +129,7 @@ router.get('/users/:id/resetpassword', async (req, res) => {
         let userId            = req.params.id,
             newPassword       = generateNewPassword(),
             isPasswordUpdated = await User.updatePassword(userId, newPassword)
+            // email(`رمز عبور جدید شما: ${newPassword}`)
             console.log(newPassword);
         if (isPasswordUpdated) {
             return res.status(200).send("ایمیل حاوی رمز جدید برای کابر ارسال شد.")

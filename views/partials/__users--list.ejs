@@ -40,12 +40,15 @@
         <!-- edit section  -->
         <div class="col-12 col-md-3 text-center">
 
-            <!-- edit button -->
-            <icon data-user-id="<%= user._id %>" class="card__user-articles bi bi-journals p-2 fs-4 border-end"></icon>
+            <!-- user articles button -->
+            <a href="/articles/users/<%= user._id %> ">
+                <icon data-user-id="<%= user._id %>" class="card__user-articles bi bi-journals p-2 fs-4 border-end"></icon>
+            </a>
 
-            <!-- delete button -->
+            <!-- reset user's password button -->
             <icon data-user-id="<%= user._id %>" class="card__reset-password bi bi-key p-2 fs-4 border-end"></icon>
-            <!-- delete button -->
+
+            <!-- delete user button -->
             <icon data-user-id="<%= user._id %>" class="card__delete-user bi bi-trash2 p-2 fs-4"></icon>
 
         </div>
