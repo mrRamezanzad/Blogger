@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const User = require('../services/user')
+const { isAdmin } = require('../middlewares/authorization')
 
 // ============================ Dashboard ============================
 router.get('/', (req, res) => {
@@ -13,7 +14,7 @@ router.get('/edit', (req, res) => {
 })
 
 // ============================ Users List ============================
-router.get('/users', async (req, res) => {
+router.get('/users', isAdmin, async (req, res) => {
   try {
     let users = await User.readAll()
     res.render('dashboard/users', {users})

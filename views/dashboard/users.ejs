@@ -1,1 +1,29 @@
-<%= users %> 
+<%- include("../partials/__header--start", {title: "Users List"}) %>
+<%- include("../partials/__header--end") %>
+<%- include("../partials/__header--end") %>
+<%- include("../partials/__navbar", {page: "users-list"}) %> 
+<%- include("../partials/__alert", {flash: locals.flash}) %>
+
+<div class="container-fluid">
+    <div class="row">
+        
+        <!-- sidebar navigation -->
+        <%- include('../partials/__sidebar', {user: locals.user}) %>
+
+        <!-- main section of page -->
+        <main class="row justify-content-center gx-sm-3 gx-md-5">
+            <!-- Rendering Articles -->
+            <% users.forEach(user => { %>
+                <%- include('../partials/__users--list', {user})  %> 
+            <% }) %>   
+        </main>
+        <!-- Rendering Pagination -->
+        <%# include('../partials/__pagination', {users}) %>
+        
+    </div>
+</div>
+
+<!-- Import Scripts -->
+<%- include("../partials/__scripts") %>
+<script src="/javascripts/sidebar.js"></script>
+<script src="/javascripts/common.js"></script>

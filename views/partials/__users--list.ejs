@@ -1,25 +1,53 @@
-<div id="article" class="article--preview col-12 col-md-9 col-lg-8 container shadow my-3 px-4 py-4 d-flex flex-row">
-    <div class="article__box-right border border-2 col-3">
-        <img class="" src="/images/articles/<%= article.picture %> " alt="article picture">
-    </div>
-    <div class="article__box-center col-8 px-3 text-center">
-        <h3 class="text-center p-2"><%= article.title %> </h3>
-        <p><%- article.content.replace(/<img .*>.*/gi, "").substring(0,200) %> ... </p>
-        <p> <strong class="ms-3">نگارنده:</strong><span><%= article.author.firstName %> </span></p>
-        <p> 
-            <strong class="ms-3">تاریخ نگارش:</strong><span><%- article.createdAt.toLocaleString() %> </span>
-            <strong class="ms-3 me-5">آخرین ویرایش:</strong><span><%- article.lastUpdate.toLocaleString() %> </span>
-        </p>
-    </div>
-    <div class="article__box-left col-1 d-flex flex-column justify-content-center">
-            <a class="btn btn-primary m-2" href="/articles/<%= article._id %>">بیشتر</a>
+<div dir="ltr" class="card col-11 col-md-8  mb-2 px-3 py-2 position-relative">
 
-            <!-- Check If User Has Access For Edit And Delete -->
-            <% if (locals.user._id === String(article.author._id)) { %>
-                <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a>
-            <% } %>
-            <% if (locals.user._id === String(article.author._id) || locals.user.role === "admin") { %>
-                <button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
-            <% } %>
+    <% if(user.role === "admin") { %> 
+        <!-- admin mark -->
+        <div class="card__admin-mark position-absolute top-0 start-0 d-inline col-md-1">admin</div>
+    <% } %> 
+    
+    <div class="row align-items-center  ">
+
+        <!-- avatar -->
+        <div class="col-12 col-md-3  d-flex d-md-block justify-content-center avatar">
+            <img class="card__avatar ms-md-4  d-block rounded rounded-circle"
+                <% if (user.avatar) { %>
+                    src="/images/avatars/<%= user.avatar %> "
+                    
+                <% } else { %>
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEZrATmgHOi5ls0YCCQBTkocia_atSw0X-Q&usqp=CAU"
+                <% } %> 
+            alt="avatar">
+        </div>
+
+        <!-- section  -->
+        <div class="col-6 col-md-3 ">
+            <!-- full name -->
+            <p class="fw-bold text-center"><%= user.firstName + " " + user.lastName %> </p>
+
+            <!-- username -->
+            <p class="text-muted text-center">نام کاربری: 
+                <%= user.username %> 
+            </p>
+        </div>
+
+        <!-- section  -->
+        <div class="col-6 col-md-3">
+            <!-- gender -->
+            <p class="fw-bold text-center"><%= user.gender %> </p>
+
+            <!-- company -->
+            <p class="text-muted text-center">company: <%#= user.company.name %> </p>
+        </div>
+
+        <!-- edit section  -->
+        <div class="col-12 col-md-3 text-center">
+
+            <!-- edit button -->
+            <icon card-id="<%= user._id %>" class="edit-user bi bi-journals p-2 fs-4 border-end"></icon>
+
+            <!-- delete button -->
+            <icon card-id="<%= user._id %>" class="delete-user bi bi-trash2 p-2 fs-4"></icon>
+
+        </div>
     </div>
 </div>

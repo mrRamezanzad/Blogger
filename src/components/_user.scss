@@ -1,0 +1,39 @@
+.card {
+    overflow: hidden;
+
+    &__admin-mark {
+        width: 100px;
+        text-align: center;
+        height: auto;
+        color: white;
+        text-shadow: 0 2px 3px black;
+        background-color: slateblue;
+        transform: rotate(-45deg) translate(-28px, -7px);
+
+    }
+
+    &__avatar {
+        object-fit: fill;
+        display: block;
+        width: 60px;
+        height: 60px !important;
+        ;
+    }
+
+    &__user-articles,
+    &__delete-user {
+        cursor: pointer;
+    }
+
+    &__user-articles {
+        &:hover {
+            color: orange;
+        }
+    }
+
+    &__delete-user {
+        &:hover {
+            color: orangered;
+        }
+    }
+}

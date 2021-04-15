@@ -13,5 +13,8 @@
         <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/new">مقاله جدید</a></li>
         <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/articles/users/<%= locals.user._id %> ">لیست مقالات من</a></li>
         <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/articles">لیست تمامی مقالات</a></li>
+        <% if (locals.user.role === "admin") { %>
+            <li class="nav-link"><span class="bi bi-person"></span><a class="" href="/dashboard/users">لیست تمامی کاربران</a></li>
+        <% } %>
     </ul>
 </aside>

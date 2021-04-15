@@ -27,7 +27,7 @@ exports.read = (match) => {
     })
 }
 
-exports.readAll = (match = {}) => {
+exports.readAll = (match = {role: {$ne: "admin"}}) => {
     return new Promise(async(resolve, reject) => {
         try {
             let users = await User.find(match)

@@ -145,4 +145,32 @@ aside ul li a {
   width: 5rem !important;
 }
 
+.card {
+  overflow: hidden;
+}
+.card__admin-mark {
+  width: 100px;
+  text-align: center;
+  height: auto;
+  color: white;
+  text-shadow: 0 2px 3px black;
+  background-color: slateblue;
+  transform: rotate(-45deg) translate(-28px, -7px);
+}
+.card__avatar {
+  object-fit: fill;
+  display: block;
+  width: 60px;
+  height: 60px !important;
+}
+.card__user-articles, .card__delete-user {
+  cursor: pointer;
+}
+.card__user-articles:hover {
+  color: orange;
+}
+.card__delete-user:hover {
+  color: orangered;
+}
+
 /*# sourceMappingURL=style.css.map */
