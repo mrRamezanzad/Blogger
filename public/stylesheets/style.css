@@ -180,4 +180,22 @@ aside ul li a {
   color: orangered;
 }
 
+.comments {
+  padding: 2rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.comments .comments__new-comment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.comments .comments__new-comment textarea {
+  width: 30rem;
+  color: red;
+  resize: none !important;
+  overflow: auto;
+}
+
 /*# sourceMappingURL=style.css.map */

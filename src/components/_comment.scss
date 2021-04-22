@@ -1,0 +1,19 @@
+.comments{
+    padding: 2rem;
+    margin: 0 auto;
+    width: 100%;
+
+    .comments__new-comment{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        
+        textarea{
+            width: 30rem;
+            color: red;
+            resize: none !important;
+            overflow: auto;
+        }
+    }
+}

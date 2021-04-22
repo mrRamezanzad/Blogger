@@ -17,4 +17,15 @@
         <% } %>
 
     </div>
+
+    
+</div>
+
+<div class="comments">
+    <div class="comments__new-comment">
+        <form action="/comments/<%= article._id %>">
+            <textarea class="form-control mb-2" type="text" name='comment' placeholder="نظر خود را درباره این مقاله بنویسید"></textarea>
+            <button class="btn btn-primary">ارسال نظر</button>
+        </form>
+    </div>
 </div>
