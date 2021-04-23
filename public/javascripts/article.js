@@ -82,3 +82,19 @@ $("#delete-article").on("click", function (e) {
     }
   });
 })
+
+// Deleting Comment
+$(`.delete-comment`).on('click', function (e) {
+  let $this = $(this)
+  console.log("delete this comment", );
+  $.ajax({
+    type: "DELETE",
+    url: `/comments/${$this.attr('data-comment-id')}`,
+    success: function (response) {
+      console.log("Success =====>>", response);
+    },
+    error: function (err) {
+      console.log("Error =====>>", err);
+    }
+  });
+})

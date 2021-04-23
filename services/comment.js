@@ -10,19 +10,15 @@ exports.create = async (articleId, ownerId, commentText) => {
            owner: ownerId,
            article: articleId
        }).save(async (err, doc) => {
-           if (err) reject("مشلکی در ساخت کامنت بوجود آمده است.")
+           if (err) return reject("مشلکی در ساخت کامنت بوجود آمده است.")
         
            try {
-
-               let updatedArticle = await Article.update(doc.article, {
-                   $push: {comments: doc._id}
-                })
+               let updatedArticle = await Article.update(doc.article, {$push: {comments: doc._id}})
 
                 if (updatedArticle.ok) resolve(true)
 
             } catch (err) {reject("مشکلی در اضافه کردن نظر به مقاله وجود دارد")}
        })
-       resolve(true)
    })
 
 }
