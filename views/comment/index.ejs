@@ -12,6 +12,6 @@
     <div>توسط : <%= comment.owner.username %></div>
 
     <% if (locals.user.role === "admin"  || String(locals.user._id) === String(comment.owner._id)) { %>
-        <div class="delete-comment btn btn-danger">حذف</div>
+        <div data-comment-id="<%= comment._id %>" data-article-id="<%= comment.article %> " class="delete-comment btn btn-danger">حذف</div>
     <% } %>
 </div>

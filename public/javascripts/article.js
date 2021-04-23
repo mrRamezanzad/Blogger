@@ -75,7 +75,7 @@ $("#delete-article").on("click", function (e) {
     error: function (err) {
       $(".alert-box").append(`
         <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
-          ${err}
+          ${err.responseText}
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       `)
@@ -89,12 +89,23 @@ $(`.delete-comment`).on('click', function (e) {
   console.log("delete this comment", );
   $.ajax({
     type: "DELETE",
-    url: `/comments/${$this.attr('data-comment-id')}`,
+    url: `/comments/${$this.attr('data-comment-id')}/${$this.attr('data-article-id')}`,
     success: function (response) {
-      console.log("Success =====>>", response);
+      $(".alert-box").append(`
+        <div class="alert alert-success text-end alert-dismissible fade show" role="alert">
+          نظر با موفقیت حذف گردید.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `)
+      setTimeout(()=>{location.reload()}, 1000)
     },
     error: function (err) {
-      console.log("Error =====>>", err);
+      $(".alert-box").append(`
+        <div class="alert alert-danger text-end alert-dismissible fade show" role="alert">
+          ${err.responseText}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `)
     }
   });
 })

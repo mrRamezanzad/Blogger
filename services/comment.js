@@ -1,4 +1,3 @@
-const mongoose = require('mongoose')
 const Comment = require('../models/comment')
 const Article = require('./article')
 
@@ -21,4 +20,20 @@ exports.create = async (articleId, ownerId, commentText) => {
        })
    })
 
+}
+
+exports.delete = (commentId, articleId) => {
+    return new Promise (async (resolve, reject) => {
+
+        try {
+            let isDeleted = await Comment.deleteOne({_id: commentId})
+            if (isDeleted.n) {
+
+                let isEdited = await Article.update({_id: articleId }, {$pull: {comments: commentId}})
+                if (isEdited.nModified) resolve(true)
+                reject("متاسفانه نظر حذف نشد.")
+            }
+
+        } catch (err) {reject("مشکلی در حذف کردن نظر بوجود آمده است.")}
+    })
 }

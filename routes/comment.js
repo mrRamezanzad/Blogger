@@ -17,4 +17,15 @@ router.post('/:articleId', async (req, res) => {
     }
 })
 
+router.delete('/:commentId/:articleId', async (req, res) => {
+    try {
+        let commentId = req.params.commentId,
+            articleId = req.params.articleId
+        await Comment.delete(commentId, articleId)
+        res.status(204).send("نظر با موفقیت حذف گردید.")
+
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
 module.exports = router
