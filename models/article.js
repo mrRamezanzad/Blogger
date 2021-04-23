@@ -30,7 +30,11 @@ const articleSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
-    }
+    },
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment' 
+    }]
 })
 
 // TODO: Remove Last Picture After Updating Article's Image

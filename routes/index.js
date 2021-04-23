@@ -7,6 +7,7 @@ module.exports = (app) => {
           dashboard     = require('./dashboard'),
           landing       = require('./landing'),
           article       = require("./article"),
+          comment       = require("./comment"),
           user          = require("./user")
 
     // TODO: REFACTOR ACCESS CONTROLS
@@ -14,6 +15,7 @@ module.exports = (app) => {
     app.use('/', landing)
     app.use('/', authorization)
     app.use('/', isLoggedIn, article)
+    app.use('/comments', isLoggedIn, comment)
     app.use('/dashboard', isLoggedIn, dashboard)
     
 }
