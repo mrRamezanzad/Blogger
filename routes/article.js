@@ -53,6 +53,7 @@ router.get('/articles/:id', async (req, res) => {
         // TODO: Add Viewers Counting
         // TODO: Getting 404 Pages At End Of Project
         if(!article) return res.status(404).redirect('/')
+
         res.render('article/index', {article})
 
     } catch (err) {

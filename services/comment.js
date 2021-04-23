@@ -15,8 +15,7 @@ exports.create = async (articleId, ownerId, commentText) => {
            try {
 
                let updatedArticle = await Article.update(doc.article, {
-                   $push: {comments: doc._id},
-                   updatedAt: Date.now()
+                   $push: {comments: doc._id}
                 })
 
                 if (updatedArticle.ok) resolve(true)

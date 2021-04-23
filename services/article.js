@@ -13,7 +13,11 @@ exports.create = (newArticleInfo) => {
 exports.read = (articleId) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let article = await Article.findById({_id: articleId}).populate('author').exec()
+            let article = await (await Article.findById({_id: articleId}).populate('author')
+            .populate({
+                    path: 'comments', model: 'Comment',
+                    populate: {path: 'owner', model: 'User'}
+            }).exec())
             resolve(article)
             
         } catch (err) {
