@@ -2,7 +2,16 @@
     padding: 2rem;
     margin: 0 auto;
     width: 100%;
+    
+    img{
+        width: 13%;
+        
+    }
 
+    a{
+        text-decoration: none;
+    }
+    
     .comments__new-comment{
         display: flex;
         justify-content: center;
@@ -15,10 +24,17 @@
             resize: none !important;
             overflow: auto;
         }
+        
     }
+        
+    .delete-comment {
+        width: auto;
+        top: 0;
+        left: 0;
 
-    .comment{
-        // FIXME: MAKE COMMENTS FIT IN THEIR PLACE
-        overflow: hidden;
+        &:hover{
+            color: orange !important;
+        }
+        
     }
 }

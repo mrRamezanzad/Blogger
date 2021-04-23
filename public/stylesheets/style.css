@@ -185,6 +185,12 @@ aside ul li a {
   margin: 0 auto;
   width: 100%;
 }
+.comments img {
+  width: 13%;
+}
+.comments a {
+  text-decoration: none;
+}
 .comments .comments__new-comment {
   display: flex;
   justify-content: center;
@@ -197,8 +203,13 @@ aside ul li a {
   resize: none !important;
   overflow: auto;
 }
-.comments .comment {
-  overflow: hidden;
+.comments .delete-comment {
+  width: auto;
+  top: 0;
+  left: 0;
+}
+.comments .delete-comment:hover {
+  color: orange !important;
 }
 
 /*# sourceMappingURL=style.css.map */
