@@ -14,13 +14,20 @@
         <!-- sidebar navigation -->
         <%- include('../partials/__sidebar', {user: locals.user}) %>
 
-        <!-- Rendering Articles -->
-        <% articles.forEach(article => { %>
-            <%- include('../partials/__article--preview', {article})  %> 
-        <% }) %>   
-        
-        <!-- Rendering Pagination -->
-        <%- include('../partials/__pagination', {articles}) %>
+        <% if (articles.length) { %>
+         
+            <!-- Rendering Articles -->
+            <% articles.forEach(article => { %>
+                <%- include('../partials/__article--preview', {article})  %> 
+            <% }) %>   
+                
+                <!-- Rendering Pagination -->
+            <%- include('../partials/__pagination', {articles}) %>
+        <% } else { %>
+            <center>
+                <h4 class="fw-light">مقاله ای برای نمایش وجود ندارد</h4>
+            </center>
+        <% } %> 
         
     </div>
 </div>
