@@ -11,7 +11,6 @@ module.exports = (app) => {
           user          = require("./user"),
           error         = require("./error")
 
-    // TODO: REFACTOR ACCESS CONTROLS
     app.use('/', user)  
     app.use('/', error)  
     app.use('/', landing)

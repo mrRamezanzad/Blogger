@@ -2,7 +2,7 @@
     <h3 class="text-center p-2"><%= article.title %> </h3>
     <img class="mb-3" src="/images/articles/<%= article.picture %> " alt="article picture">
     <p><%- article.content %> </p>
-    <p> <span class="ms-3">نگارنده:</span><span><%= article.author.firstName %> </span></p>
+    <p> <span class="ms-3">نگارنده:</span><span><a href="/articles/users/<%= article.author._id %>/pages/1"><%= article.author.username %></a></span></p>
     <p> <span class="ms-3">تاریخ نگارش:</span><span><%- article.createdAt.toLocaleString() %> </span></p>
     <p> <span class="ms-3">آخرین ویرایش:</span><span><%- article.lastUpdate.toLocaleString() %> </span></p>
 

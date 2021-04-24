@@ -18,7 +18,7 @@ router.post('/login',notLoggedIn, async (req, res) => {
     let loginPattern = ["username", "password"],
         inputKeys    = Object.keys(req.body),
         isDataValid  = loginPattern.every( input => inputKeys.includes(input) && req.body[input].trim() !== "" )
-// FIXME: returning correct message on view alert instead of obj obj
+        
     if(!isDataValid) {
         req.flash('error', "لطفا فرم ورود را کامل پر کنید")
         return res.redirect('/login')

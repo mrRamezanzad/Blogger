@@ -25,7 +25,9 @@
             <p class="text-center fw-bold"><%= user.firstName + " " + user.lastName %> </p>
 
             <!-- username -->
-            <p class="text-center"><strong>نام کاربری : </strong><%= user.username %></p>
+            <p class="text-center"><strong>نام کاربری : </strong>
+                <a href="/articles/users/<%= user._id %>/pages/1" class="text-primary"><%= user.username %></a>
+            </p>
             <p class="text-center"><strong>جنسیت : </strong><%= user.gender === 'male'? 'مرد' : 'زن' %></p>
         </div>
 

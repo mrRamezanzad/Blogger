@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 nav:hover {
   box-shadow: 0px 0px 15px gray;
   transition: all 250ms linear;

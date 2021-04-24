@@ -63,7 +63,9 @@ router.get('/articles/pages/:pageNumber', async (req, res) => {
         let page = req.params.pageNumber ?? 1, skip = req.params.skip ?? 2
         let articles = await Article.readAll({}, page, skip)
         let totalPages = Math.ceil((await Article.count())/skip)
-        res.render('article/list', {title:"لیست مقالات", articles, totalPages, currentPage: page})
+        let address = req.url.substr(0,req.url.lastIndexOf('/'))
+
+        res.render('article/list', {title:"لیست مقالات", articles, totalPages, currentPage: page, address})
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")
@@ -112,10 +114,15 @@ router.delete('/articles/:id', async (req, res) => {
     }
 })
 
-router.get('/articles/users/:id', async (req, res) => {
+router.get('/articles/users/:id/:pages/:pageNumber', async (req, res) => {
+    console.log('im in here');
     try {
-        let articles = await Article.readAll({author: req.params.id})
-        res.render('article/list', {title: "مقالات من", articles})
+        let page = req.params.pageNumber ?? 1, skip = req.params.skip ?? 2
+        let totalPages = Math.ceil((await Article.count({author: req.params.id}))/skip)
+        let articles = await Article.readAll({author: req.params.id}, page, skip)
+        let address = req.url.substr(0,req.url.lastIndexOf('/'))
+
+        res.render('article/list', {title: "مقالات من", articles, totalPages, currentPage: page, address})
 
     } catch (err) {
         req.flash('error', "مشکلی در یافتن مقالات کابر وجود دارد")
