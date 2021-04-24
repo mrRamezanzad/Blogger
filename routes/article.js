@@ -51,12 +51,10 @@ router.get('/articles/:id', async (req, res) => {
         let requestedArticleId = req.params.id,
             article = await Article.read(requestedArticleId)
         // TODO: Add Viewers Counting
-        if(!article) return res.status(404).redirect('/404')
-
         res.render('article/index', {article})
 
     } catch (err) {
-        res.status(500).redirect('/500')
+        res.status(404).redirect('/404')
     }
 })
 
@@ -68,7 +66,7 @@ router.get('/articles', async (req, res) => {
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")
-        res.status(500).redirect('/500')
+        res.status(404).redirect('/404')
     }
 })
 
@@ -77,11 +75,10 @@ router. get('/articles/edit/:id', async (req, res) => {
         let requestedArticleId = req.params.id,
             article = await Article.read(requestedArticleId)
 
-        if(!article) return res.status(404).redirect('/404')
         res.render('article/edit', {article})
 
     } catch (err) {
-        res.status(500).redirect('/500')
+        res.status(404).redirect('/404')
     }
 })
 
