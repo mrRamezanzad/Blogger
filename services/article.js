@@ -27,6 +27,15 @@ exports.read = (articleId) => {
     })
 }
 
+exports.count = () => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            resolve(await Article.count())
+            
+        } catch (err) {reject("مشکلی در شمارش تعداد مقالات وجود دارد.")}
+    })
+}
+
 // FIXME: 3- MAKE PAGINATION
 exports.readAll = (match, page, skip) => {
     return new Promise(async (resolve, reject) => {

@@ -22,7 +22,7 @@
             <% }) %>   
                 
                 <!-- Rendering Pagination -->
-            <%- include('../partials/__pagination', {articles}) %>
+            <%- include('../partials/__pagination', {totalPages, currentPage}) %>
         <% } else { %>
             <center>
                 <h4 class="fw-light">مقاله ای برای نمایش وجود ندارد</h4>

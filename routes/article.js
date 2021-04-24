@@ -58,12 +58,12 @@ router.get('/articles/:id', async (req, res) => {
     }
 })
 
-router.get('/articles', async (req, res) => {
+router.get('/articles/pages/:pageNumber', async (req, res) => {
     try {
-        let page = req.params.page ?? 1, skip = req.params.skip ?? 2
+        let page = req.params.pageNumber ?? 1, skip = req.params.skip ?? 2
         let articles = await Article.readAll({}, page, skip)
-        // add and send total pages to render
-        res.render('article/list', {title:"لیست مقالات", articles, currentPage: page})
+        let totalPages = Math.ceil((await Article.count())/skip)
+        res.render('article/list', {title:"لیست مقالات", articles, totalPages, currentPage: page})
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")

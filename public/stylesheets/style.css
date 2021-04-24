@@ -145,6 +145,10 @@ aside ul li a {
   width: 5rem !important;
 }
 
+.pagination a {
+  text-decoration: none !important;
+}
+
 .card {
   overflow: hidden;
 }
