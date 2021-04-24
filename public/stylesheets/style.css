@@ -199,7 +199,6 @@ aside ul li a {
 }
 .comments .comments__new-comment textarea {
   width: 30rem;
-  color: red;
   resize: none !important;
   overflow: auto;
 }

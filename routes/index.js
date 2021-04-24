@@ -8,10 +8,12 @@ module.exports = (app) => {
           landing       = require('./landing'),
           article       = require("./article"),
           comment       = require("./comment"),
-          user          = require("./user")
+          user          = require("./user"),
+          error         = require("./error")
 
     // TODO: REFACTOR ACCESS CONTROLS
     app.use('/', user)  
+    app.use('/', error)  
     app.use('/', landing)
     app.use('/', authorization)
     app.use('/', isLoggedIn, article)
