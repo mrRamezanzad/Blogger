@@ -12,7 +12,7 @@ exports.create = async (articleId, ownerId, commentText) => {
            if (err) return reject("مشلکی در ساخت کامنت بوجود آمده است.")
         
            try {
-               let updatedArticle = await Article.update(doc.article, {$push: {comments: doc._id}})
+                let updatedArticle = await Article.update(doc.article, {$push: {comments: doc._id}})
 
                 if (updatedArticle.ok) resolve(true)
 

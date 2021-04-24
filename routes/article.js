@@ -61,8 +61,9 @@ router.get('/articles/:id', async (req, res) => {
 router.get('/articles', async (req, res) => {
     try {
         let page = req.params.page ?? 1, skip = req.params.skip ?? 2
-        let articles = await Article.readAll({})
-        res.render('article/list', {title:"لیست مقالات", articles})
+        let articles = await Article.readAll({}, page, skip)
+        // add and send total pages to render
+        res.render('article/list', {title:"لیست مقالات", articles, currentPage: page})
 
     } catch (err) {
         req.flash('error', "مشکلی در پیدا کردن لیست مقالات وجود دارد")

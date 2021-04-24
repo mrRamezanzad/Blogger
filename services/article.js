@@ -16,6 +16,7 @@ exports.read = (articleId) => {
             let article = await (await Article.findById({_id: articleId}).populate('author')
             .populate({
                     path: 'comments', model: 'Comment',
+                    options: {sort: {createdAt: -1}},
                     populate: {path: 'owner', model: 'User'}
             }).exec())
             resolve(article)
@@ -26,11 +27,11 @@ exports.read = (articleId) => {
     })
 }
 
-// FIXME: 3- MAKE PAGINATION 
-exports.readAll = (match) => {
+// FIXME: 3- MAKE PAGINATION
+exports.readAll = (match, page, skip) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let articles = await Article.find(match).populate('author').limit(100).skip(0).sort({createdAt: -1}).exec()
+            let articles = await Article.find(match).populate('author').limit(skip).skip((page-1)*skip).sort({createdAt: -1}).exec()
             resolve(articles)
 
         } catch (err) {
