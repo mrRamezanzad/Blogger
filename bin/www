@@ -8,7 +8,7 @@ const app         = require('../app'),
       debug       = require('debug')('blog:server'),
       http        = require('http')
       
-const {SERVER_PORT} = require('../tools/manifest') 
+const {SERVER_PORT} = require('../helpers/manifest') 
 
 /**
  * Get port from environment and store in Express.

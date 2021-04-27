@@ -4,10 +4,10 @@ const router = require('express').Router(),
 
 const User = require('../services/user')
 
-const {avatarUploader} = require('../tools/uploader')
+const {avatarUploader} = require('../helpers/uploader')
 const {comparePassword} = require('../services/authentication')
 const {notLoggedIn, isLoggedIn} = require('../services/authorization')
-const {updateUserInSession, removeOldFile, generateNewPassword, sendMail} = require('../tools/general')
+const {updateUserInSession, removeOldAvatar, generateNewPassword, sendMail} = require('../helpers/general')
 
 // ============================ Register Controller ============================
 router.post('/users', notLoggedIn, async (req, res) => {
@@ -109,9 +109,9 @@ router.post('/users/avatar', isLoggedIn, async (req, res) => {
             }
 
             // If User Had Another Avatar Then Remove It
-            let isOldFileRemoved
+            let isOldAvatarRemoved
             (async () => {
-                isOldFileRemoved = await removeOldFile(req.session.user.avatar)
+                isOldAvatarRemoved = await removeOldAvatar(req.session.user.avatar)
             })()
             
             req.session.user.avatar = req.file.filename

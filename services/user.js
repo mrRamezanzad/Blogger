@@ -1,4 +1,5 @@
 const User = require('../models/user')
+const Article = require('./article')
 
 exports.create  = (userInfo) => {
     return new Promise((resolve, reject) => {
@@ -51,8 +52,9 @@ exports.update = (userId, updatedUserInfo) => {
 exports.delete = (userId) => {
     return new Promise(async(resolve, reject) => {
         try {
-            let isDeleted = await User.remove({_id: userId})
+            let isDeleted = await User.deleteOne({_id: userId})
             if(!isDeleted.n) reject("مشکلی در حذف اکانت شما وجود دارد")
+            await Article.delete({author: userId})
             resolve(true)
             
         } catch (err) {reject(err)}

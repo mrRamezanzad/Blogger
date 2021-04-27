@@ -28,6 +28,25 @@ exports.removeOldAvatar = async (filename, callback) => {
 
 }
 
+exports.removeOldArticleImage = async (filename) => {
+    
+    return new Promise((resolve, reject) => {
+
+        if (filename.length) {
+            try {
+                let imageExists = fs.existsSync(path.join(__dirname, "../public/images/articles", filename))
+                if (!imageExists) reject("عکسی برای حذف کردن وجود ندارد")
+            
+                fs.unlinkSync(path.join(__dirname, "../public/images/articles", filename))
+                resolve(true)
+
+           } catch (err) {
+                reject("مشکلی در پاک کردن عکس مقاله قدیمی وجود دارد")
+           }
+        }
+   })
+}
+
 exports.updateUserInSession = (userInSession, updatedUserInfo) => {
     
     userInSession.firstName  = updatedUserInfo.firstName
@@ -37,3 +56,8 @@ exports.updateUserInSession = (userInSession, updatedUserInfo) => {
     userInSession.gender     = updatedUserInfo.gender
     userInSession.lastUpdate = updatedUserInfo.lastUpdate
 }
+
+exports.getDate = () => {
+    let date = new Date()
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}-${date.getMilliseconds()}`
+} 

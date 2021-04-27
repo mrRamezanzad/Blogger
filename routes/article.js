@@ -2,7 +2,7 @@ const router  = require('express').Router(),
       multer  = require('multer')
 
 const Article = require('../services/article')
-const {articlePictureUploader}  = require('../tools/uploader')
+const {articlePictureUploader}  = require('../helpers/uploader')
 
 // ============================ New Article ============================
 router.get('/new', (req, res) => {
@@ -106,7 +106,7 @@ router.put('/articles/:id',articlePictureUploader.single('article-picture'), asy
 router.delete('/articles/:id', async (req, res) => {
     try {
         let articleId = req.params.id
-        await Article.delete(articleId)
+        await Article.delete({_id: articleId})
         res.send("مقاله مورد نظر با موفقیت حذف شد")
 
     } catch (err) {

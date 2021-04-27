@@ -1,7 +1,7 @@
 const cookieParser  = require('cookie-parser'),
       session       = require('express-session'),
       createError   = require('http-errors'),
-      dbConnector   = require('./tools/dbConnector'),
+      dbConnector   = require('./helpers/dbConnector'),
       express       = require('express'),
       app           = express(),
       path          = require('path'),
@@ -12,7 +12,7 @@ const cookieParser  = require('cookie-parser'),
 const db = dbConnector("localhost:27017", "final-project")
 
 // Setting Up Admin
-require('./tools/initializer')
+require('./helpers/initializer')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))

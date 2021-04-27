@@ -2,12 +2,14 @@
 const multer        = require('multer'),
       path          = require('path')
 
+const {getDate} = require('./general')
+
 const avatarStorage = multer.diskStorage({
     destination: function (req, file, next) {
         next(null, path.join(__dirname, '../public/images/avatars'))
     },
     filename: function (req, file, next) {
-        next(null, `${req.session.user.username}-${Date.now()}-${file.originalname}`)
+        next(null, `${req.session.user.username}-${getDate()}-${file.originalname}`)
     }
 })
 
@@ -26,7 +28,7 @@ const articlePictureStorage = multer.diskStorage({
         next(null, path.join(__dirname, '../public/images/articles'))
     },
     filename: function (req, file, next) {
-        next(null, `${req.body.title}-${Date.now()}-${file.originalname}`)
+        next(null, `${req.body.title}-${getDate()}-${file.originalname}`)
     }
 })
 

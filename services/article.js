@@ -1,6 +1,9 @@
 const mongoose = require('mongoose'),
       Article  = require('../models/article')
 
+const { removeOldArticleImage } = require('../helpers/general')
+const { articlePictureUploader } = require('../helpers/uploader')
+
 exports.create = (newArticleInfo) => {
     return new Promise((resolve, reject) => {
         new Article(newArticleInfo).save((err, result) => {
@@ -51,8 +54,14 @@ exports.readAll = (match, page, skip) => {
 exports.update = (articleId, editedArticleData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let editedArticle = await Article.updateOne({_id: articleId}, editedArticleData)
-            resolve(editedArticle)
+             let article = await Article.findOne({_id: articleId})
+             let hasPicture = Object.keys(editedArticleData).includes('picture')
+             if(hasPicture){
+                removeOldArticleImage(article.picture)
+            }
+
+            let result = await article.updateOne(editedArticleData)
+            resolve(result)
 
         } catch (err) {
             reject("مشکلی در آپدیت کردن وجود دارد")
@@ -60,10 +69,15 @@ exports.update = (articleId, editedArticleData) => {
     })
 }
 
-exports.delete = (articleId) => {
+exports.delete = (match) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await Article.deleteOne({_id: articleId})
+            let articles = await Article.find(match)
+            articles.forEach(async (article) => {return await article.deleteOne()})
+
+            let imageAddresses = articles.map(article => {return article.picture})
+            imageAddresses.forEach( imageAddress => {removeOldArticleImage(imageAddress)})
+
             resolve(true)
 
         } catch (err) {
