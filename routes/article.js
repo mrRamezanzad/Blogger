@@ -95,7 +95,7 @@ router.put('/articles/:id',articlePictureUploader.single('article-picture'), asy
                 lastUpdate  : Date.now()
             }
 
-        let {ok: isEdited} = await Article.update(articleId, editedArticleData)
+        let {ok: isEdited} = await Article.update({_id: articleId}, editedArticleData)
         res.send("ویرایش با موفقیت انجام گرفت")
 
     } catch (err) {

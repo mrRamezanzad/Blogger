@@ -30,7 +30,7 @@ exports.delete = (commentId, articleId) => {
             if (isDeleted.n) {
 
                 let isEdited = await Article.update({_id: articleId }, {$pull: {comments: commentId}})
-                if (isEdited.nModified) resolve(true)
+                if (isEdited.nModified) return resolve(true)
                 reject("متاسفانه نظر حذف نشد.")
             }
 

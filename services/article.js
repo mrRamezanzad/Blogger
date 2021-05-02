@@ -1,5 +1,7 @@
 const mongoose = require('mongoose'),
       Article  = require('../models/article')
+      
+const Comment = require('./comment')
 
 const { removeOldArticleImage } = require('../helpers/general')
 const { articlePictureUploader } = require('../helpers/uploader')
@@ -51,10 +53,10 @@ exports.readAll = (match, page, skip) => {
     })
 }
 
-exports.update = (articleId, editedArticleData) => {
+exports.update = (match, editedArticleData) => {
     return new Promise(async (resolve, reject) => {
         try {
-             let article = await Article.findOne({_id: articleId})
+             let article = await Article.findOne(match)
              let hasPicture = Object.keys(editedArticleData).includes('picture')
              if(hasPicture){
                 removeOldArticleImage(article.picture)
@@ -73,7 +75,13 @@ exports.delete = (match) => {
     return new Promise(async (resolve, reject) => {
         try {
             let articles = await Article.find(match)
-            articles.forEach(async (article) => {return await article.deleteOne()})
+            articles.forEach(async (article) => {
+
+                await article.comments.forEach(async commentId => {
+                    await Comment.delete(commentId, article.id)
+                })
+                await article.deleteOne()
+            })
 
             let imageAddresses = articles.map(article => {return article.picture})
             imageAddresses.forEach( imageAddress => {removeOldArticleImage(imageAddress)})
