@@ -13,7 +13,7 @@
             <a class="btn btn-warning m-2" href="/articles/edit/<%= article._id %>">تغییر</a>
         <% } %>
         <% if (locals.user._id === String(article.author._id) || locals.user.role === "admin") { %>
-            <button id="delete-article" data-article-id="<%= article._id %>" class="btn btn-danger m-2">حذف</button>
+            <button data-article-id="<%= article._id %>" class="delete-article btn btn-danger m-2">حذف</button>
         <% } %>
 
     </div>
