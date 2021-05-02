@@ -12,6 +12,7 @@ async function initializer (){
             admin = new user({
                 firstName       : "Shahin",
                 lastName        : "Barekat", 
+                email           : "blogger@gmail.com", 
                 username        : "admin", 
                 password        : "admin", 
                 gender          : "male",

@@ -83,11 +83,11 @@ router.delete('/users/:id', isLoggedIn, async (req, res) => {
     try{
         let isDeleted = await User.delete(userId)
 
-        if(req.session.user.role === "admin") {
-            return res.status(204).json({msg:"sssss"})
-        }
+        // Remove avatar of user if exists
+        req.session.user.avatar && await removeOldAvatar(req.session.user.avatar)
+
         res.clearCookie('sid')
-        res.status(204).send("به امید دیدار")
+        res.status(204).send('به امید دیدار مجدد')
         
     }
     catch (err) {return res.status(500).send("در این لحظه امکان حذف اکانت وجود ندارد")}
