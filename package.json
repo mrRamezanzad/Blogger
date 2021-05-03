@@ -1,6 +1,6 @@
 {
   "name": "blogger",
-  "version": "2.5.1",
+  "version": "3.0.0",
   "private": true,
   "author": "mrRamezanzad",
   "scripts": {
@@ -27,7 +27,7 @@
   "main": "./bin/www",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrRamezanzad/MohammadReza_Ramezanzad_hw23_maktab45.git"
+    "url": "git+https://github.com/mrRamezanzad/Blogger.git"
   },
   "keywords": [
     "blogging",
@@ -40,7 +40,7 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mrRamezanzad/MohammadReza_Ramezanzad_hw23_maktab45/issues"
+    "url": "https://github.com/mrRamezanzad/Blogger/issues"
   },
-  "homepage": "https://github.com/mrRamezanzad/MohammadReza_Ramezanzad_hw23_maktab45#readme"
+  "homepage": "https://github.com/mrRamezanzad/Blogger#readme"
 }
