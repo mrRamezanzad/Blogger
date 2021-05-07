@@ -86,7 +86,8 @@ router.delete('/users/:id', isLoggedIn, async (req, res) => {
         // Remove avatar of user if exists
         req.session.user.avatar && await removeOldAvatar(req.session.user.avatar)
 
-        res.clearCookie('sid')
+        if (userId === req.session.user._id) res.clearCookie('sid')
+        
         res.status(204).send('به امید دیدار مجدد')
         
     }

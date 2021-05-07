@@ -1,11 +1,12 @@
-const SERVER_PORT         = 80,
-      SERVER_ADDRESS      = "localhost",
-      DB_PORT             = 27017,
-      DB_NAME             = "final-project"
+exports.SERVER_PORT = 80,
+exports.SERVER_ADDRESS = "localhost"
 
-module.exports = {
-    SERVER_PORT,
-    SERVER_ADDRESS,
-    DB_PORT,
-    DB_NAME
+exports.DB_PORT = 27017,
+exports.DB_NAME = "final-project"
+
+
+exports.mail = {
+    EMAIL_SERVICE: "gmail",
+    EMAIL_ADDRESS: "mohammadrezaramezanzad@gmail.com",
+    EMAIL_PASSWORD: "ybbrglhggeqstbhm"
 }
