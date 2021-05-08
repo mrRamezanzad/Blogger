@@ -50,6 +50,13 @@ router.get('/articles/:id', async (req, res) => {
     try {
         let requestedArticleId = req.params.id,
             article = await Article.read(requestedArticleId)
+
+        let isOldViewer = article.viewers.some(viewer => String(viewer._id) === req.session.user._id)    
+        if (!isOldViewer) {
+            article.viewers.push({_id: req.session.user._id})
+            article.save()
+        }
+        
         // TODO: Add Viewers Counting
         res.render('article/index', {article})
 
