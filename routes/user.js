@@ -44,8 +44,9 @@ router.put('/users/:id/', isLoggedIn, (req, res) => {
         mobile      : req.body.mobile,
         gender      : req.body.gender,
         lastUpdate  : Date.now()
-
+        
     }
+    console.log(updatedUserInfo)
     try {
         User.update(req.params.id, updatedUserInfo)
         updateUserInSession(req.session.user, updatedUserInfo)

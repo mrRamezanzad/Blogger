@@ -56,6 +56,7 @@ exports.updateUserInSession = (userInSession, updatedUserInfo) => {
     userInSession.lastName   = updatedUserInfo.lastName
     userInSession.username   = updatedUserInfo.username
     userInSession.mobile     = updatedUserInfo.mobile
+    userInSession.email     = updatedUserInfo.email
     userInSession.gender     = updatedUserInfo.gender
     userInSession.lastUpdate = updatedUserInfo.lastUpdate
 }

@@ -71,6 +71,7 @@ function getEditedUserInfo () {
         lastName    : $("[name='lastname']").val(),
         gender      : $("[name='gender']").val(),
         mobile      : $("[name='mobile']").val(),
+        email       : $("[name='email']").val(),
         username    : $("[name='username']").val()
     }
 }
