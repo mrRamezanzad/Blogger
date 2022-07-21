@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+        
+  mongo:
+    image: 'mongo:5.0'
+    container_name: 'mongo'
+    restart: 'unless-stopped'
+    networks:
+      - backend         
+
+  blogger-backend:
+    image: blogger-backend:v1
+    build: 
+      context: ./blogger-backend
+    container_name: 'blogger-backend'
+    depends_on: 
+      - 'mongo'
+    restart: 'unless-stopped'
+    ports:
+      - '80:80'
+    networks:
+      - backend
+
+  blogger-frontend:
+    image: blogger-frontend:v1
+    build: 
+      context: ./blogger-frontend
+    container_name: 'blogger-frontend'
+    restart: 'unless-stopped'
+    depends_on: 
+      - 'blogger-backend'
+    ports:
+      - '3000:3000'
+    networks:
+      - frontend
+
+networks:
+  backend:
+    external: true
+
+  frontend: 
+    external: true
+

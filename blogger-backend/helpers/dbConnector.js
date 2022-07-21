@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 module.exports = function (address, databaseName) {
   
-    mongoose.connect(`mongodb://${address}/${databaseName}`,{
+    mongoose.connect(`mongodb://mongo/${databaseName}`,{
         useNewUrlParser     : true,
         useUnifiedTopology  : true,
         
