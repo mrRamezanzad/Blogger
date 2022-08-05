@@ -1,0 +1,36 @@
+{
+  "name": "blogger",
+  "version": "1.0.0",
+  "description": "advanced blogging system",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrRamezanzad/Blogger.git"
+  },
+  "keywords": [
+    "blogging",
+    "react",
+    "redux",
+    "nodejs",
+    "mongodb",
+    "mongoose",
+    "express"
+  ],
+  "author": "mrRamezanzad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrRamezanzad/Blogger/issues"
+  },
+  "homepage": "https://github.com/mrRamezanzad/Blogger#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "lerna": "^5.2.0",
+    "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "blogger": "^3.0.0"
+  }
+}
