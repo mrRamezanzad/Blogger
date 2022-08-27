@@ -14,7 +14,7 @@ const {SERVER_PORT} = require('../helpers/manifest')
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || SERVER_PORT)
+const port = normalizePort(process.env.APP_PORT || SERVER_PORT)
 app.set('port', port)
 
 /**
@@ -89,5 +89,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port
   debug('Listening on ' + bind)
-  console.log(`\n\n=========================== Server Started At: http://localhost:${SERVER_PORT}/ ===========================\n\n`)                  
+  console.log(`\n\n=========================== Server Started At: http://${process.env.APP_HOST}:${SERVER_PORT}/ ===========================\n\n`)                  
 }

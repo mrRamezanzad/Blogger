@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -67,6 +68,11 @@ export default function BlogPostCard({ post, index }) {
     { number: view, icon: 'eva:eye-fill' },
     { number: share, icon: 'eva:share-fill' },
   ];
+
+  useEffect(()=> {
+    console.log("hello")
+    if(post) console.trace(post)
+  })
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>

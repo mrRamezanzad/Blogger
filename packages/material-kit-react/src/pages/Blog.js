@@ -16,7 +16,7 @@ import {
 } from "../sections/@dashboard/blog";
 
 // mock
-import POSTS from "../_mock/blog";
+// import POSTS from "../_mock/blog";
 
 // ----------------------------------------------------------------------
 
@@ -32,12 +32,23 @@ export default function Blog() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    if (posts.length === 0) setPosts(["a"]);
-
-    return () => {
-      console.log("posts: ", posts);
-    };
-  });
+    axios.get("http://localhost:3001/articles/pages/1").then((data) => {
+      let articles = data?.data?.result?.articles;
+      articles = articles.map((article) => {
+        return {
+          cover:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkm9k9MSevdeLrAlNqMcUFTTriliaXi91E0Q&usqp=CAU",
+          title: article.title,
+          view: article.viewers,
+          comment: article.comments,
+          share: 10,
+          author: article.author,
+          createdAt: article.createdAt,
+        };
+      });
+      setPosts(articles);
+    });
+  }, []);
 
   return (
     <Page title="Dashboard: Blog">
@@ -68,14 +79,14 @@ export default function Blog() {
           alignItems="center"
           justifyContent="space-between"
         >
-          <BlogPostsSearch posts={POSTS} />
+          <BlogPostsSearch posts={posts} />
           <BlogPostsSort options={SORT_OPTIONS} />
         </Stack>
 
         <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
-          ))}
+          {posts.map((post, index) => {
+            return <BlogPostCard key={post.id} post={post} index={index} />;
+          })}
         </Grid>
       </Container>
     </Page>

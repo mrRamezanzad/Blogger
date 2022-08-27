@@ -1,0 +1,34 @@
+version: '3.5'
+services:
+
+  mongodb: 
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - 27017:27017
+    networks:
+      - blogger
+
+  blogger:
+    image: blogger
+    container_name: blogger
+    depends_on:
+      - mongodb
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    entrypoint: nodemon --inspect=0.0.0.0 bin/www
+    volumes:
+      - .:/src/backend
+      - ./node_modules
+    ports:
+      - 9229:9229
+    networks:
+      - blogger
+
+networks:
+  blogger:
+    external: true
